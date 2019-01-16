@@ -1,17 +1,14 @@
 <?php
 
-namespace FleetCart\Exceptions;
+namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Http\Response;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
     /**
-     * A list of the exception types that should not be reported.
+     * A list of the exception types that are not reported.
      *
      * @var array
      */
@@ -20,65 +17,35 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * A list of the inputs that are never flashed for validation exceptions.
+     *
+     * @var array
+     */
+    protected $dontFlash = [
+        'password',
+        'password_confirmation',
+    ];
+
+    /**
      * Report or log an exception.
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param \Exception  $e
+     * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $e)
+    public function report(Exception $exception)
     {
-        parent::report($e);
+        parent::report($exception);
     }
 
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Exception $e
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Exception $exception)
     {
-        if ($this->shouldRedirectToDashboard($e)) {
-            return redirect()->route('admin.dashboard.index');
-        }
-
-        if ($this->shouldShowNotFoundPage($e)) {
-            return response()->view('errors.404');
-        }
-
-        return parent::render($request, $e);
-    }
-
-    /**
-     * Determine whether response should redirect to the dashboard.
-     *
-     * @param \Exception $e
-     * @return bool
-     */
-    private function shouldRedirectToDashboard(Exception $e)
-    {
-        if (config('app.debug') || ! $this->container['inBackend']) {
-            return false;
-        }
-
-        return $e instanceof NotFoundHttpException || $e instanceof ModelNotFoundException;
-    }
-
-    /**
-     * Determine if the response should show not found page.
-     *
-     * @param \Exception $e
-     * @return bool
-     */
-    private function shouldShowNotFoundPage(Exception $e)
-    {
-        if ($this->container['inBackend']) {
-            return false;
-        }
-
-        return $e instanceof NotFoundHttpException || $e instanceof ModelNotFoundException;
+        return parent::render($request, $exception);
     }
 }

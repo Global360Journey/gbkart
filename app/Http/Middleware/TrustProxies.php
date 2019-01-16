@@ -1,6 +1,6 @@
 <?php
 
-namespace FleetCart\Http\Middleware;
+namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Fideloper\Proxy\TrustProxies as Middleware;
@@ -15,9 +15,9 @@ class TrustProxies extends Middleware
     protected $proxies;
 
     /**
-     * The current proxy header mappings.
+     * The headers that should be used to detect proxies.
      *
-     * @var array
+     * @var int
      */
     protected $headers = Request::HEADER_X_FORWARDED_ALL;
 }
