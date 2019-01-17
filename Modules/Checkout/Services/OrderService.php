@@ -5,12 +5,14 @@ namespace Modules\Checkout\Services;
 use Modules\Cart\Facades\Cart;
 use Modules\Order\Entities\Order;
 use Modules\Currency\Entities\CurrencyRate;
+use Modules\Shipping\Facades\ShippingMethod;
 
 class OrderService
 {
     public function create($request)
     {
         $this->mergeShippingAddress($request);
+        $this->addShippingMethodToCart($request);
 
         return tap($this->store($request), function ($order) use ($request) {
             $this->storeOrderProducts($order);
@@ -25,6 +27,13 @@ class OrderService
         $request->merge([
             'shipping' => $request->ship_to_a_different_address ? $request->shipping : $request->billing,
         ]);
+    }
+
+    private function addShippingMethodToCart($request)
+    {
+        if (! Cart::hasShippingMethod()) {
+            Cart::addShippingMethod(ShippingMethod::get($request->shipping_method));
+        }
     }
 
     private function store($request)

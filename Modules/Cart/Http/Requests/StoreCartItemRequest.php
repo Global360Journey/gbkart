@@ -15,7 +15,6 @@ class StoreCartItemRequest extends Request
      */
     public function rules()
     {
-        // dd($this->all());
         $product = Product::with('options')
             ->select('id', 'manage_stock', 'qty')
             ->findOrFail($this->product_id);
@@ -70,6 +69,21 @@ class StoreCartItemRequest extends Request
         }
 
         return $rules;
+    }
+
+    /**
+     * Get data to be validated from the request.
+     *
+     * @return array
+     */
+    protected function validationData()
+    {
+        return array_merge(
+            $this->all(),
+            [
+                'options' => array_filter($this->options ?? []),
+            ]
+        );
     }
 
     /**

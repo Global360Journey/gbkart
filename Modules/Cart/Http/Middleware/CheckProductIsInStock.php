@@ -17,7 +17,8 @@ class CheckProductIsInStock
      */
     public function handle(Request $request, Closure $next)
     {
-        $product = Product::select('in_stock', 'manage_stock', 'qty')
+        $product = Product::withName()
+            ->addSelect('id', 'in_stock', 'manage_stock', 'qty')
             ->where('id', $request->product_id)
             ->firstOrFail();
 

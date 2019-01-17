@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ locale() }}">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,7 +39,7 @@
         @routes
     </head>
 
-    <body class="{{ $theme }}">
+    <body class="{{ $theme }} {{ storefront_layout() }}">
         <!--[if lt IE 8]>
             <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -61,6 +61,20 @@
                     @yield('content')
                 </div>
             </div>
+
+            @if ($brands->isNotEmpty())
+                <section class="brands-wrapper">
+                    <div class="container">
+                        <div class="brands">
+                            @foreach ($brands as $brand)
+                                <div class="col-md-3">
+                                    <img src="{{ $brand->path }}">
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </section>
+            @endif
 
             @include('public.partials.footer')
 

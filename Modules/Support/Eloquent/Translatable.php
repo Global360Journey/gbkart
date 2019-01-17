@@ -41,4 +41,11 @@ trait Translatable
                 });
         });
     }
+
+    public function scopeForCurrentLocaleWithFallback($query)
+    {
+        $query->with(['translations' => function ($translationQuery) {
+            $translationQuery->whereIn('locale', [config('app.locale'), config('app.fallback_locale')]);
+        }]);
+    }
 }

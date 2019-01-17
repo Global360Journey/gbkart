@@ -19,6 +19,10 @@ class GatewayServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (! config('app.installed')) {
+            return;
+        }
+
         $this->registerPayPalExpress();
         $this->registerStripe();
         $this->registerCashOnDelivery();

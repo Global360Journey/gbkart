@@ -9,19 +9,39 @@ class Updater
 {
     public static function run()
     {
-        self::cacheClear();
-        self::viewClear();
+        self::migrate();
+        self::clearViewCache();
+        self::clearConfigCache();
+        self::clearRouteCache();
+        self::clearAppCache();
 
         File::delete(storage_path('app/update'));
     }
 
-    private static function cacheClear()
+    private static function migrate()
     {
-        Artisan::call('cache:clear');
+        if (config('app.installed')) {
+            Artisan::call('migrate', ['--force' => true]);
+        }
     }
 
-    private static function viewClear()
+    private static function clearViewCache()
     {
         Artisan::call('view:clear');
+    }
+
+    private static function clearConfigCache()
+    {
+        Artisan::call('config:clear');
+    }
+
+    private static function clearRouteCache()
+    {
+        Artisan::call('route:trans:clear');
+    }
+
+    private static function clearAppCache()
+    {
+        Artisan::call('cache:clear');
     }
 }

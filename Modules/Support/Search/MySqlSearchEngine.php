@@ -78,7 +78,11 @@ class MySqlSearchEngine extends Engine
      */
     private function getSearchKeyword($builder)
     {
-        return '+' . preg_replace('/[^a-zA-Z0-9\s]/', '', $builder->query) . '*';
+        if (is_null($builder->query)) {
+            return '';
+        }
+
+        return '+' . preg_replace('/[-+~*()><@"]/', '', $builder->query) . '*';
     }
 
     /**

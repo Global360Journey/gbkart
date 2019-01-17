@@ -19,8 +19,9 @@ class Kernel extends HttpKernel
         \FleetCart\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \FleetCart\Http\Middleware\TrustProxies::class,
+        \FleetCart\Http\Middleware\RedirectToInstallerIfNotInstalled::class,
         \FleetCart\Http\Middleware\RunUpdater::class,
-        \FleetCart\Http\Middleware\RedirectToInstallationIfNotInstalled::class,
+        \FleetCart\Http\Middleware\CacheRouteIfNotCached::class,
     ];
 
     /**

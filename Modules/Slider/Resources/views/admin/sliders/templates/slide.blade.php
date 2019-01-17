@@ -10,6 +10,8 @@
         </div>
 
         <div class="slide-body">
+            <input type="hidden" name="slides[<%- slideNumber %>][id]" value="<%- slide.id %>">
+
             <div class="slide-image" data-slide-number="<%- slideNumber %>">
                 <% if (slide.file && slide.file.path) { %>
                     <img src="<%- slide.file.path %>">

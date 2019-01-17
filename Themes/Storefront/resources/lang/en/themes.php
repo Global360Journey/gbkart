@@ -5,7 +5,7 @@ return [
     'theme-violet' => 'Violet',
     'theme-red' => 'Red',
     'theme-sky-blue' => 'Sky Blue',
-    'theme-marrs-green' => 'Marrs green',
+    'theme-marrs-green' => 'Marrs Green',
     'theme-navy-blue' => 'Navy Blue',
     'theme-pink' => 'Pink',
     'theme-black' => 'Black',

@@ -27,14 +27,19 @@ class StorefrontTabs extends Tabs
             ->add($this->socialLinks());
 
         $this->group('home_page_sections', trans('storefront::storefront.tabs.group.home_page_sections'))
+            ->add($this->sliderBanners())
+            ->add($this->bannerSectionOne())
             ->add($this->features())
             ->add($this->productCarousel())
             ->add($this->recentProducts())
+            ->add($this->bannerSectionTwo())
             ->add($this->threeColumnVerticalProductCarousel())
             ->add($this->landscapeProducts())
+            ->add($this->bannerSectionThree())
             ->add($this->productTabs())
             ->add($this->twoColumnProductCarousel())
-            ->add($this->recentlyViewed());
+            ->add($this->recentlyViewed())
+            ->add($this->brands());
     }
 
     private function general()
@@ -85,9 +90,9 @@ class StorefrontTabs extends Tabs
             $tab->fields([
                 'storefront_primary_menu',
                 'storefront_category_menu',
-                'translatable.storefront_category_menu_title',
+                'storefront_category_menu_title',
                 'storefront_footer_menu',
-                'translatable.storefront_footer_menu_title',
+                'storefront_footer_menu_title',
             ]);
 
             $tab->view('admin.storefront.tabs.menus', [
@@ -122,6 +127,26 @@ class StorefrontTabs extends Tabs
         });
     }
 
+    private function sliderBanners()
+    {
+        return tap(new Tab('slider_banners', trans('storefront::storefront.tabs.slider_banners')), function (Tab $tab) {
+            $tab->weight(22);
+            $tab->view('admin.storefront.tabs.slider_banners', [
+                'banners' => SliderBanner::all(),
+            ]);
+        });
+    }
+
+    private function bannerSectionOne()
+    {
+        return tap(new Tab('banner_section_1', trans('storefront::storefront.tabs.banner_section_1')), function (Tab $tab) {
+            $tab->weight(23);
+            $tab->view('admin.storefront.tabs.banner_section_1', [
+                'banners' => Banner::allForSectionOne(),
+            ]);
+        });
+    }
+
     private function features()
     {
         return tap(new Tab('features', trans('storefront::storefront.tabs.features')), function (Tab $tab) {
@@ -148,6 +173,16 @@ class StorefrontTabs extends Tabs
         });
     }
 
+    private function bannerSectionTwo()
+    {
+        return tap(new Tab('banner_section_2', trans('storefront::storefront.tabs.banner_section_2')), function (Tab $tab) {
+            $tab->weight(37);
+            $tab->view('admin.storefront.tabs.banner_section_2', [
+                'banner' => Banner::findByName('storefront_banner_section_2_banner'),
+            ]);
+        });
+    }
+
     private function threeColumnVerticalProductCarousel()
     {
         return tap(new Tab('three_column_vertical_product_carousel', trans('storefront::storefront.tabs.three_column_vertical_product_carousel')), function (Tab $tab) {
@@ -166,6 +201,16 @@ class StorefrontTabs extends Tabs
             $tab->weight(45);
             $tab->view('admin.storefront.tabs.landscape_products', [
                 'products' => $this->getProductListFromSetting('storefront_landscape_products_section_products'),
+            ]);
+        });
+    }
+
+    private function bannerSectionThree()
+    {
+        return tap(new Tab('banner_section_3', trans('storefront::storefront.tabs.banner_section_3')), function (Tab $tab) {
+            $tab->weight(47);
+            $tab->view('admin.storefront.tabs.banner_section_3', [
+                'banners' => Banner::allForSectionThree(),
             ]);
         });
     }
@@ -204,6 +249,16 @@ class StorefrontTabs extends Tabs
         return tap(new Tab('recently_viewed', trans('storefront::storefront.tabs.recently_viewed')), function (Tab $tab) {
             $tab->weight(60);
             $tab->view('admin.storefront.tabs.recently_viewed');
+        });
+    }
+
+    private function brands()
+    {
+        return tap(new Tab('brands', trans('storefront::storefront.tabs.brands')), function (Tab $tab) {
+            $tab->weight(65);
+            $tab->view('admin.storefront.tabs.brands', [
+                'brands' => File::find(setting('storefront_brands', [])),
+            ]);
         });
     }
 }

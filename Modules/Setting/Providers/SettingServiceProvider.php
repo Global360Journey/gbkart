@@ -7,8 +7,6 @@ use Modules\Setting\Admin\SettingTabs;
 use Illuminate\Support\ServiceProvider;
 use Modules\Support\Traits\LoadsConfig;
 use Modules\Admin\Ui\Facades\TabManager;
-use Illuminate\Support\Facades\Validator;
-use Modules\Setting\Validators\RedisValidator;
 
 class SettingServiceProvider extends ServiceProvider
 {
@@ -24,8 +22,6 @@ class SettingServiceProvider extends ServiceProvider
         TabManager::register('settings', SettingTabs::class);
 
         $this->addAssets('admin.settings.edit', ['admin.media.css', 'admin.media.js', 'admin.setting.js']);
-
-        Validator::extend('redis', RedisValidator::class);
     }
 
     /**

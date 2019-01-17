@@ -45,8 +45,8 @@ class CoreServiceProvider extends ServiceProvider
         $this->setupSupportedLocales();
         $this->registerSetting();
         $this->setupAppLocale();
+        $this->hideDefaultLocaleInURL();
         $this->setupAppTimezone();
-        $this->setupRedisConfig();
         $this->setupMailConfig();
         $this->registerMiddleware();
         $this->registerInBackendState();
@@ -96,6 +96,18 @@ class CoreServiceProvider extends ServiceProvider
     }
 
     /**
+     * Hide default locale in url for non multi-locale mode.
+     *
+     * @return void
+     */
+    private function hideDefaultLocaleInURL()
+    {
+        if (! is_multilingual()) {
+            $this->app['config']->set('laravellocalization.hideDefaultLocaleInURL', true);
+        }
+    }
+
+    /**
      * Register setting binding.
      *
      * @return void
@@ -110,14 +122,18 @@ class CoreServiceProvider extends ServiceProvider
     /**
      * Setup application locale.
      *
-     * @return void
+     * @return string
      */
     private function setupAppLocale()
     {
-        $this->app['config']->set('app.locale', setting('default_locale', 'en'));
-        $this->app['config']->set('app.fallback_locale', setting('default_locale', 'en'));
+        $this->app['config']->set('app.locale', $defaultLocale = Setting::get('default_locale'));
+        $this->app['config']->set('app.fallback_locale', $defaultLocale);
 
-        LaravelLocalization::setLocale(setting('default_locale'));
+        if ($this->app['request']->segment(1) === 'admin') {
+            return LaravelLocalization::setLocale($defaultLocale);
+        }
+
+        return LaravelLocalization::setLocale();
     }
 
     /**
@@ -132,18 +148,6 @@ class CoreServiceProvider extends ServiceProvider
         date_default_timezone_set($timezone);
 
         $this->app['config']->set('app.timezone', $timezone);
-    }
-
-    /**
-     * Setup application redis config.
-     *
-     * @return void
-     */
-    private function setupRedisConfig()
-    {
-        $this->app['config']->set('database.redis.default.host', setting('redis_host'));
-        $this->app['config']->set('database.redis.default.password', setting('redis_password'));
-        $this->app['config']->set('database.redis.default.port', setting('redis_port'));
     }
 
     /**

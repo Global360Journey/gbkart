@@ -43,16 +43,30 @@ class Slider extends Model
 
         static::saved(function ($slider) {
             $slider->saveSlides(request('slides', []));
-
-            Cache::forget("slider_with_slides.{$slider->id}");
+            $slider->clearCache();
         });
+    }
+
+    public function clearCache()
+    {
+        Cache::flush();
     }
 
     public static function findWithSlides($id)
     {
-        return Cache::rememberForever("slider_with_slides.{$id}", function () use ($id) {
+        return Cache::rememberForever("slider_with_slides.{$id}:" . locale(), function () use ($id) {
             return static::with('slides')->find($id);
         });
+    }
+
+    public function slides()
+    {
+        return $this->hasMany(SliderSlide::class);
+    }
+
+    public function getAutoplaySpeedAttribute($autoplaySpeed)
+    {
+        return $autoplaySpeed ?: 3000;
     }
 
     public function table()
@@ -68,20 +82,21 @@ class Slider extends Model
      */
     public function saveSlides($slides)
     {
-        $this->slides()->delete();
+        $ids = $this->getDeleteCandidates($slides);
+
+        if ($ids->isNotEmpty()) {
+            $this->slides()->whereIn('id', $ids)->delete();
+        }
 
         foreach ($slides as $slide) {
-            $this->slides()->create($slide);
+            $this->slides()->updateOrCreate(['id' => $slide['id']], $slide);
         }
     }
 
-    public function slides()
+    private function getDeleteCandidates($slides = [])
     {
-        return $this->hasMany(SliderSlide::class);
-    }
-
-    public function getAutoplaySpeedAttribute($autoplaySpeed)
-    {
-        return $autoplaySpeed ?: 3000;
+        return $this->slides()
+            ->pluck('id')
+            ->diff(array_pluck($slides, 'id'));
     }
 }

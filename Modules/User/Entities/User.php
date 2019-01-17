@@ -39,6 +39,16 @@ class User extends EloquentUser implements AuthenticatableContract
     }
 
     /**
+     * Determine if the user is a customer.
+     *
+     * @return bool
+     */
+    public function isCustomer()
+    {
+        return $this->hasRoleId(setting('customer_role'));
+    }
+
+    /**
      * Checks if a user belongs to the given Role ID.
      *
      * @param int $roleId

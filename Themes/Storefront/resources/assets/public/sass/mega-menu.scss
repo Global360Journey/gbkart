@@ -431,6 +431,12 @@
             padding: 0;
             cursor: pointer;
 
+            &:nth-child(9) {
+                > a {
+                    border-bottom: none !important;
+                }
+            }
+
             &:nth-child(n+10) {
                 display: none;
             }

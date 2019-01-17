@@ -6,6 +6,7 @@ export default class {
             this.pickImage(e);
         });
 
+        this.sortable();
         this.removeImageEventListener();
     }
 
@@ -41,6 +42,10 @@ export default class {
                 <input type="hidden" name="${inputName}" value="${file.id}">
             </div>
         `);
+    }
+
+    sortable() {
+        Sortable.create($('.image-list')[0], { animation: 150 });
     }
 
     removeImageEventListener() {

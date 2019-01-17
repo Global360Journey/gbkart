@@ -31,7 +31,7 @@ if (FleetCart.stripePublishableKey) {
     let form = document.getElementById('checkout-form');
 
     form.addEventListener('submit', (e) => {
-        if ($('[name=payment_method]:checked').val() !== 'stripe') {
+        if ($('[name="payment_method"]:checked').val() !== 'stripe') {
             return;
         }
 

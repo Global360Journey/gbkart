@@ -25,6 +25,10 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
+        if (auth()->check() && auth()->user()->isCustomer()) {
+            return redirect()->route('account.dashboard.index');
+        }
+
         if ($this->inExceptArray($request) || auth()->check()) {
             return $next($request);
         }
@@ -41,7 +45,9 @@ class AdminMiddleware
     protected function inExceptArray($request)
     {
         foreach ($this->except as $except) {
-            if (preg_match("/{$except}/", request()->route()->getName())) {
+            $routeName = optional(request()->route())->getName();
+
+            if (preg_match("/{$except}/", $routeName)) {
                 return true;
             }
         }

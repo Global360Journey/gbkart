@@ -26,6 +26,10 @@ class TranslationServiceProvider extends IlluminateTranslationServiceProvider
      */
     public function boot()
     {
+        if (! config('app.installed')) {
+            return;
+        }
+
         $this->setupTranslatable();
 
         Carbon::setLocale(locale());

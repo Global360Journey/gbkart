@@ -101,7 +101,7 @@ export default class {
         $('#is_searchable').prop('checked', category.is_searchable);
         $('#is_active').prop('checked', category.is_active);
 
-        $('#category-form input[name=parent_id]').remove();
+        $('#category-form input[name="parent_id"]').remove();
     }
 
     clear() {
@@ -117,7 +117,7 @@ export default class {
         $('.btn-delete').addClass('hide');
         $('.form-group .help-block').remove();
 
-        $('#category-form input[name=parent_id]').remove();
+        $('#category-form input[name="parent_id"]').remove();
 
         $('.general-information-tab a').click();
     }

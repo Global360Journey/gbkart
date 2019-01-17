@@ -18,6 +18,10 @@ class AssetServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (! config('app.installed')) {
+            return;
+        }
+
         $this->addThemesAssets();
         $this->addModulesAssets();
     }

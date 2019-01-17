@@ -1,5 +1,17 @@
 <?php
 
+if (! function_exists('storefront_layout')) {
+    /**
+     * Get storefront layout name.
+     *
+     * @return string
+     */
+    function storefront_layout()
+    {
+        return setting('storefront_layout', 'default');
+    }
+}
+
 if (! function_exists('is_filtering')) {
     /**
      * Check if current route is filter products using given value of attributes.

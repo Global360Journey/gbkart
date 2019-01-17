@@ -16,7 +16,7 @@ class SettingController extends Controller
      */
     public function edit()
     {
-        $settings = app('setting');
+        $settings = setting()->all();
         $tabs = TabManager::get('settings');
 
         return view('setting::admin.settings.edit', compact('settings', 'tabs'));
@@ -32,8 +32,7 @@ class SettingController extends Controller
     {
         setting($request->except('_token', '_method'));
 
-        session()->flash('success', trans('admin::messages.resource_saved', ['resource' => trans('setting::settings.settings')]));
-
-        return redirect(non_localized_url(route('admin.settings.edit')));
+        return redirect(non_localized_url())
+            ->with('success', trans('admin::messages.resource_saved', ['resource' => trans('setting::settings.settings')]));
     }
 }

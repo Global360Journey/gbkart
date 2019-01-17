@@ -133,9 +133,9 @@ class Coupon extends Model
         return today() <= $this->end_date;
     }
 
-    public function usageLimitReached()
+    public function usageLimitReached($customerEmail = null)
     {
-        return $this->perCouponUsageLimitReached() || $this->perCustomerUsageLimitReached();
+        return $this->perCouponUsageLimitReached() || $this->perCustomerUsageLimitReached($customerEmail);
     }
 
     public function perCouponUsageLimitReached()
@@ -147,17 +147,31 @@ class Coupon extends Model
         return $this->used >= $this->usage_limit_per_coupon;
     }
 
-    public function perCustomerUsageLimitReached()
+    public function perCustomerUsageLimitReached($customerEmail = null)
     {
-        if (is_null($this->usage_limit_per_customer) || auth()->guest()) {
+        if ($this->couponHasNoUsageLimitForCustomers() ||
+            $this->userIsNotLoggedInWhenAddingCouponToCart($customerEmail)
+        ) {
             return false;
         }
 
+        $customerEmail = $customerEmail ?: auth()->user()->email;
+
         $used = $this->orders()
-            ->where('customer_email', auth()->user()->email)
+            ->where('customer_email', $customerEmail)
             ->count();
 
         return $used >= $this->usage_limit_per_customer;
+    }
+
+    private function couponHasNoUsageLimitForCustomers()
+    {
+        return is_null($this->usage_limit_per_customer);
+    }
+
+    private function userIsNotLoggedInWhenAddingCouponToCart($customerEmail = null)
+    {
+        return is_null($customerEmail) && auth()->guest();
     }
 
     public function products()

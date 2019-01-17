@@ -14,6 +14,10 @@ class CurrentCurrencyController extends Controller
      */
     public function store($currency)
     {
+        if (! in_array($currency, setting('supported_currencies'))) {
+            return back();
+        }
+
         $cookie = cookie()->forever('currency', $currency);
 
         return back()->withCookie($cookie);

@@ -12,7 +12,7 @@
 
         {{ Form::checkbox('auto_refresh_currency_rates', trans('setting::attributes.auto_refresh_currency_rates'), trans('setting::settings.form.enable_auto_refreshing_currency_rates'), $errors, $settings) }}
 
-        <div class="{{ old('auto_refresh_currency_rates', $settings['auto_refresh_currency_rates']) ? '' : 'hide' }}" id="auto-refresh-frequency-field">
+        <div class="{{ old('auto_refresh_currency_rates', array_get($settings, 'auto_refresh_currency_rates')) ? '' : 'hide' }}" id="auto-refresh-frequency-field">
             {{ Form::select('auto_refresh_currency_rate_frequency', trans('setting::attributes.auto_refresh_currency_rate_frequency'), $errors, trans('setting::settings.form.auto_refresh_currency_rate_frequencies'), $settings, ['required' => true]) }}
         </div>
     </div>

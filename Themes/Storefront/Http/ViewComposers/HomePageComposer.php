@@ -4,7 +4,10 @@ namespace Themes\Storefront\Http\ViewComposers;
 
 use Illuminate\Support\Collection;
 use Modules\Product\RecentlyViewed;
+use Modules\Slider\Entities\Slider;
+use Themes\Storefront\Admin\Banner;
 use Modules\Product\Entities\Product;
+use Themes\Storefront\Admin\SliderBanner;
 
 class HomePageComposer
 {
@@ -34,22 +37,29 @@ class HomePageComposer
     public function compose($view)
     {
         $view->with([
+            'slider' => Slider::findWithSlides(setting('storefront_slider')),
+            'sliderBanners' => SliderBanner::all(),
+            'bannerSectionOneBanners' => $this->getBannerSectionOneBanners(),
             'features' => $this->getFeatures(),
             'carouselProducts' => $this->getCarouselProducts(),
             'recentProducts' => $this->getRecentProducts(),
+            'bannerSectionTwoBanner' => $this->getBannerSectionTwoBanner(),
             'threeColumnCarouselProducts' => $this->getThreeColumnCarouselProducts(),
             'landscapeProducts' => $this->getLandscapeProducts(),
+            'bannerSectionThreeBanners' => $this->getBannerSectionThreeBanners(),
             'tabProducts' => $this->getTabProducts(),
             'twoColumnCarouselProducts' => $this->getTwoColumnCarouselProducts(),
             'recentlyViewedProducts' => $this->getRecentlyViewedProducts(),
         ]);
     }
 
-    /**
-     * Get all available features.
-     *
-     * @return \Illuminate\Support\Collection
-     */
+    private function getBannerSectionOneBanners()
+    {
+        if (setting('storefront_banner_section_1_enabled')) {
+            return Banner::allForSectionOne();
+        }
+    }
+
     private function getFeatures()
     {
         if (! setting('storefront_features_section_enabled')) {
@@ -63,12 +73,6 @@ class HomePageComposer
         });
     }
 
-    /**
-     * Get feature for the given feature number.
-     *
-     * @param int $number
-     * @return array
-     */
     private function getFeatureFor($number)
     {
         return [
@@ -90,11 +94,13 @@ class HomePageComposer
             ->get();
     }
 
-    /**
-     * Get carousel products.
-     *
-     * @return \Illuminate\Support\Collection
-     */
+    private function getBannerSectionTwoBanner()
+    {
+        if (setting('storefront_banner_section_2_enabled')) {
+            return Banner::findByName('storefront_banner_section_2_banner');
+        }
+    }
+
     private function getCarouselProducts()
     {
         if (! setting('storefront_product_carousel_section_enabled')) {
@@ -102,6 +108,13 @@ class HomePageComposer
         }
 
         return $this->getProductsForCardByIds(setting('storefront_product_carousel_section_products'));
+    }
+
+    private function getBannerSectionThreeBanners()
+    {
+        if (setting('storefront_banner_section_3_enabled')) {
+            return Banner::allForSectionThree();
+        }
     }
 
     private function getTabProducts()
@@ -159,11 +172,6 @@ class HomePageComposer
             ->get();
     }
 
-    /**
-     * Get recently viewed products.
-     *
-     * @return \Illuminate\Support\Collection
-     */
     private function getRecentlyViewedProducts()
     {
         if (! setting('storefront_recently_viewed_section_enabled')) {

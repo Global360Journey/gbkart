@@ -21,6 +21,10 @@ class CurrencyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (! config('app.installed')) {
+            return;
+        }
+
         TabManager::register('currency_rates', CurrencyRateTabs::class);
 
         $this->addAssets('admin.currency_rates.index', ['admin.currency.js']);

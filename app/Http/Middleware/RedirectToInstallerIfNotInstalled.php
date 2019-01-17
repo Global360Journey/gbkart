@@ -4,7 +4,7 @@ namespace FleetCart\Http\Middleware;
 
 use Closure;
 
-class RedirectToInstallationIfNotInstalled
+class RedirectToInstallerIfNotInstalled
 {
     /**
      * Handle an incoming request.

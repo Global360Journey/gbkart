@@ -18,7 +18,7 @@ class CheckCouponUsageLimit
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Cart::coupon()->usageLimitReached()) {
+        if (Cart::coupon()->usageLimitReached($request->customer_email)) {
             throw new CouponUsageLimitReachedException;
         }
 

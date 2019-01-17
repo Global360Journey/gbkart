@@ -16,7 +16,7 @@
     <div class="box box-primary">
         <div class="box-body index-table" id="{{ isset($resource) ? "{$resource}-table" : '' }}">
             @if (isset($thead))
-                @include('admin::components.table', compact('thead', 'slot', 'tfoot'))
+                @include('admin::components.table')
             @else
                 {{ $slot }}
             @endif

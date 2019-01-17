@@ -53,11 +53,11 @@ class Setting extends Model
     /**
      * Clear settings cache.
      *
-     * @return bool
+     * @return void
      */
     public function clearCache()
     {
-        return Cache::forget('settings.all');
+        Cache::flush();
     }
 
     /**
@@ -67,12 +67,10 @@ class Setting extends Model
      */
     public static function allCached()
     {
-        if (! config('app.cache')) {
-            return static::all()->pluck('value', 'key');
-        }
-
-        return Cache::rememberForever('settings.all', function () {
-            return static::all()->pluck('value', 'key');
+        return Cache::rememberForever('settings.all:' . locale(), function () {
+            return self::forCurrentLocaleWithFallback()->get()->mapWithKeys(function ($setting) {
+                return [$setting->key => $setting->value];
+            });
         });
     }
 

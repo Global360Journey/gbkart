@@ -15,6 +15,10 @@ class CurrencyExchangeRateServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (! config('app.installed')) {
+            return;
+        }
+
         $this->setupCurrencyRateExchangeService();
 
         $this->app->singleton(CurrencyRateExchanger::class, function () {

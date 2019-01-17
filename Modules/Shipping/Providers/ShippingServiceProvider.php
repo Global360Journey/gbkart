@@ -15,6 +15,10 @@ class ShippingServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (! config('app.installed')) {
+            return;
+        }
+
         $this->registerFreeShipping();
         $this->registerLocalPickup();
         $this->registerFlatRate();

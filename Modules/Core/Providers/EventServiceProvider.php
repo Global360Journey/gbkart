@@ -12,6 +12,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        //
+        \Modules\Setting\Events\SettingSaved::class => [
+            \Modules\Core\Listeners\ClearConfigCache::class,
+            \Modules\Core\Listeners\ClearRouteCache::class,
+        ],
     ];
 }

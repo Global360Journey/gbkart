@@ -52,6 +52,7 @@ class SettingTabs extends Tabs
                 'supported_locales.*',
                 'default_locale',
                 'default_timezone',
+                'customer_role'
             ]);
 
             $tab->view('setting::admin.settings.tabs.general', [

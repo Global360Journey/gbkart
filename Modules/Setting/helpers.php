@@ -22,7 +22,7 @@ if (! function_exists('setting')) {
 
         try {
             return app('setting')->get($key, $default);
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             return $default;
         }
     }

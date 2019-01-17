@@ -37,9 +37,9 @@ class CartCoupon
         return $this->coupon->free_shipping;
     }
 
-    public function usageLimitReached()
+    public function usageLimitReached($customerEmail)
     {
-        return $this->fresh()->coupon->usageLimitReached();
+        return $this->fresh()->coupon->usageLimitReached($customerEmail);
     }
 
     public function fresh()

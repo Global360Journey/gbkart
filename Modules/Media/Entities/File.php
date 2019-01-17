@@ -31,16 +31,14 @@ class File extends Model
      * Get the file's path.
      *
      * @param string $path
-     * @return string
+     * @return string|null
      */
-    public function getPathAttribute($path)
-    {
-        if (is_null($path)) {
-            return;
-        }
-
-        return Storage::disk($this->disk)->url($path);
-    }
+     public function getPathAttribute($path)
+     {
+         if (! is_null($path)) {
+             return Storage::disk($this->disk)->url($path);
+         }
+     }
 
     /**
      * Determine if the file type is image.

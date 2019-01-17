@@ -3,7 +3,6 @@
 namespace Modules\Page\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Modules\Slider\Entities\Slider;
 
 class HomeController extends Controller
 {
@@ -14,8 +13,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $slider = Slider::findWithSlides(setting('storefront_slider'));
+        return view('public.home.index');
+    }
 
-        return view('public.home.index', compact('slider'));
+    private function determineFullWidthSlider()
+    {
+        $theme = setting('storefront_layout');
+
+        return $theme === 'full_width_slider_collapsed_menu' || $theme == 'full_width_slider_expanded_menu';
     }
 }

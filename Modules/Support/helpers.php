@@ -64,7 +64,13 @@ if (! function_exists('currency')) {
             return setting('default_currency');
         }
 
-        return Cookie::get('currency') ?: setting('default_currency');
+        $currency = Cookie::get('currency');
+
+        if (! in_array($currency, setting('supported_currencies'))) {
+            $currency = setting('default_currency');
+        }
+
+        return $currency;
     }
 }
 
@@ -88,7 +94,7 @@ if (! function_exists('supported_locale_keys')) {
      */
     function supported_locale_keys()
     {
-        return array_keys(supported_locales());
+        return LaravelLocalization::getSupportedLanguagesKeys();
     }
 }
 

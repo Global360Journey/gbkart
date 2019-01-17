@@ -20,7 +20,7 @@
         left: 0;
         top: 0;
         width: 100%;
-        z-index: 1001;
+        z-index: 1091;
         padding: 10px 0;
         box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
     }
@@ -203,19 +203,17 @@
     width: 100%;
     position: relative;
     height: 48px;
-    border: 2px solid #f0f0f0;
+    border: 2px solid #dce0e8;
     border-left: none;
     border-radius: $radius-default;
-
-    @include themify {
-        background: themed('white');
-    }
+    background: #eff1f3;
 
     input.search-box-input {
         font-size: 16px;
         flex-grow: 1;
         padding-left: 10px;
-        border-left: 2px solid #f0f0f0;
+        border-left: 2px solid #dce0e8;
+        background: #eff1f3;
     }
 
     .search-box-button {
@@ -647,11 +645,11 @@
     .search-area {
         width: auto;
         float: right !important;
-        margin: 18px 20px 0 0;
+        margin: 17px 20px 0 0;
     }
 
     .user-cart {
-        margin-top: 17px;
+        margin-top: 16px;
 
         .user-cart-inner {
             padding: 0 15px 15px 0;

@@ -33,7 +33,7 @@ export default class {
                     let label = this.options[index].name;
                     let value = this.options[index].id;
 
-                    this.$control.find(`.item[data-value=${value}]`).html(
+                    this.$control.find(`.item[data-value="${value}"]`).html(
                         label.replace(/¦––\s/g, '') +
                         '<a href="javascript:void(0)" class="remove" tabindex="-1">×</a>'
                     );

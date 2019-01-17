@@ -1,7 +1,6 @@
 export default class {
     constructor() {
         this.managerStock();
-        this.sortableImages();
 
         window.admin.removeSubmitButtonOffsetOn([
             '#images', '#attributes', '#options', '#related_products', '#up_sells', '#cross_sells', '#reviews',
@@ -18,10 +17,6 @@ export default class {
                 $('#qty-field').addClass('hide');
             }
         });
-    }
-
-    sortableImages() {
-        Sortable.create($('.image-list')[0], { animation: 150 });
     }
 
     submit(e) {

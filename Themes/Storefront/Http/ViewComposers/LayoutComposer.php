@@ -28,6 +28,8 @@ class LayoutComposer
             'primaryMenu' => $this->getPrimaryMenu(),
             'categoryMenu' => $this->getCategoryMenu(),
             'cart' => $this->getCart(),
+            'shouldExpandCategoryMenu' => $this->getShouldExpandCategoryMenu(),
+            'brands' => $this->getBrands(),
             'footerLogo' => $this->getFooterLogo(),
             'footerMenu' => $this->getFooterMenu(),
             'socialLinks' => $this->getSocialLinks(),
@@ -75,6 +77,26 @@ class LayoutComposer
     private function getCart()
     {
         return Cart::instance();
+    }
+
+    private function getShouldExpandCategoryMenu()
+    {
+        $layout = setting('storefront_layout', 'default');
+
+        if ($layout === 'default') {
+            return request()->routeIs('home');
+        }
+
+        if ($layout === 'slider_with_banners') {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function getBrands()
+    {
+        return File::find(setting('storefront_brands', []));
     }
 
     private function getFooterLogo()

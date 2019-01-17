@@ -12,16 +12,4 @@ abstract class TranslationModel extends Model
      * @var bool
      */
     public $timestamps = false;
-
-    /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        static::addGlobalScope('locale', function ($query) {
-            $query->whereIn('locale', [locale(), config('app.fallback_locale')]);
-        });
-    }
 }

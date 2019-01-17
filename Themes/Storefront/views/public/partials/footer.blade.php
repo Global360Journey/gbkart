@@ -19,15 +19,24 @@
                         <div class="contact">
                             <ul class="list-inline">
                                 @if (setting('store_phone'))
-                                    <li><i class="fa fa-phone-square" aria-hidden="true"></i>{{ setting('store_phone') }}</li>
+                                    <li>
+                                        <i class="fa fa-phone-square" aria-hidden="true"></i>
+                                        <span class="contact-info">{{ setting('store_phone') }}</span>
+                                    </li>
                                 @endif
 
                                 @if (setting('store_email'))
-                                    <li><i class="fa fa-envelope-o" aria-hidden="true"></i>{{ setting('store_email') }}</li>
+                                    <li>
+                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                        <span class="contact-info">{{ setting('store_email') }}</span>
+                                    </li>
                                 @endif
 
                                 @if (setting('storefront_footer_address'))
-                                    <li><i class="fa fa-location-arrow" aria-hidden="true"></i>{{ setting('storefront_footer_address') }}</li>
+                                    <li>
+                                        <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                        <span class="contact-info">{{ setting('storefront_footer_address') }}</span>
+                                    </li>
                                 @endif
                             </ul>
                         </div>
@@ -35,7 +44,7 @@
                 </div>
 
                 <div class="col-md-8">
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <div class="row">
                             <div class="links">
                                 <div class="mobile-collapse">
@@ -57,7 +66,7 @@
                     </div>
 
                     @if ($footerMenu->isNotEmpty())
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <div class="row">
                                 <div class="links">
                                     <div class="mobile-collapse">
@@ -90,7 +99,7 @@
         @endif
     </div>
 
-    <div class="footer-bottom bg-black-dark p-tb-20 clearfix">
+    <div class="footer-bottom p-tb-20 clearfix">
         <div class="container">
             <div class="copyright text-center">
                 {!! $copyrightText !!}

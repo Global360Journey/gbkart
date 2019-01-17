@@ -13,6 +13,10 @@ class SearchEngineServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (! config('app.installed')) {
+            return;
+        }
+
         $this->app['config']->set([
             'scout' => [
                 'driver' => setting('search_engine', 'mysql'),

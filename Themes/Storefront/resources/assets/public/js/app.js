@@ -86,7 +86,7 @@ $(function () {
             }
         });
 
-        let categorySelect = $('select[name=category]');
+        let categorySelect = $('select[name="category"]');
 
         if (categorySelect.val() === '') {
             categorySelect.removeAttr('name');
@@ -470,6 +470,32 @@ $(function () {
         ],
     });
 
+    /*----------------------------------------*/
+    /*      brands slider
+    /*----------------------------------------*/
+
+    $('.brands').slick({
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        dots: false,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                },
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                },
+            },
+        ],
+    });
 
     /*----------------------------------------*/
     /*      scroll to top
@@ -819,7 +845,7 @@ $(function () {
     let stripePayment = $('#stripe-payment');
 
     $('#payment .next-step').on('click', () => {
-        let paymentMethod = $('[name=payment_method]:checked').val();
+        let paymentMethod = $('[name="payment_method"]:checked').val();
 
         if (paymentMethod === 'stripe') {
             stripePayment.slideDown(300, () => {
@@ -841,7 +867,7 @@ $(function () {
             return;
         }
 
-        let paymentMethod = $('[name=payment_method]:checked').val();
+        let paymentMethod = $('[name="payment_method"]:checked').val();
 
         if (paymentMethod === 'stripe') {
             stripePayment.slideDown(300, () => {

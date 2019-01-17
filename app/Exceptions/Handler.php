@@ -41,7 +41,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if ($this->shouldRedirectToDashboard($e)) {
+        if ($this->shouldRedirectToAdminDashboard($e)) {
             return redirect()->route('admin.dashboard.index');
         }
 
@@ -53,12 +53,12 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Determine whether response should redirect to the dashboard.
+     * Determine whether response should redirect to the admin dashboard.
      *
      * @param \Exception $e
      * @return bool
      */
-    private function shouldRedirectToDashboard(Exception $e)
+    private function shouldRedirectToAdminDashboard(Exception $e)
     {
         if (config('app.debug') || ! $this->container['inBackend']) {
             return false;

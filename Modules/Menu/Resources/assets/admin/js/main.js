@@ -42,7 +42,7 @@ confirmationModal.find('form').on('submit', (e) => {
         success() {
             success(trans('menu::messages.menu_item_deleted'));
 
-            $(`.dd-item[data-id=${id}]`).fadeOut();
+            $(`.dd-item[data-id="${id}"]`).fadeOut();
         },
         error(xhr) {
             error(`${xhr.statusText}: ${xhr.responseJSON.message}`);

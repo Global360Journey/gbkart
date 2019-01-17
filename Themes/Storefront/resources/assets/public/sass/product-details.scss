@@ -123,6 +123,7 @@
 
 	.product-rating {
 		float: left;
+		margin: 1px 10px 0 0;
 
 		> i {
 			margin-top: 2px;
@@ -131,7 +132,8 @@
 
 	.product-review {
 		font-size: 16px;
-		margin: 10px 20px 0 0;
+		display: inline-block;
+		margin-right: 20px;
 
 		@include themify {
 			color: themed('black');
@@ -473,8 +475,9 @@
 		}
 
 		> label:before {
-		  	font-size: 20px;
 		  	font-family: FontAwesome;
+		  	font-size: 20px;
+		  	font-weight: normal;
 		  	display: inline-block;
 		  	content: "\f006";
 		  	cursor: pointer;

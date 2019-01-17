@@ -16,6 +16,10 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (! config('app.installed')) {
+            return;
+        }
+
         $activeTheme = setting('active_theme');
 
         if (is_null($activeTheme)) {

@@ -1,7 +1,18 @@
+.default {
+    .home-slider {
+        margin: -5px 0 15px -8px;
+    }
+}
+
+.slider_with_banners {
+    .home-slider {
+        margin: -5px 0 15px;
+    }
+}
+
 .home-slider {
-    border-radius: $radius-default;
     overflow: hidden;
-    margin: -5px 0 15px -8px;
+    border-radius: $radius-default;
 
     &.slick-dotted.slick-slider {
         margin: 0;
@@ -30,6 +41,10 @@
             }
         }
     }
+
+    .slider-content {
+        height: 400px;
+    }
 }
 
 .slide {
@@ -57,10 +72,6 @@
         z-index: -1;
         transform: scale(1.25, 1.25);
         transition: 500ms cubic-bezier(0.7, 0, 0.3, 1);
-    }
-
-    .slider-content {
-        height: 400px;
     }
 
     .caption {
