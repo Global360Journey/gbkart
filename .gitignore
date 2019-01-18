@@ -1,0 +1,9 @@
+.idea/
+.phpintel/
+*.sublime-project
+node_modules/
+/vendor
+npm-debug.log
+yarn-error.log
+*.map
+.env
