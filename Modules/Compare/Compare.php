@@ -47,25 +47,6 @@ class Compare extends DarryldecodeCart
 
     public function attributes()
     {
-        $commonAttributes = $this->getCommonAttributes();
-
-        return $this->products()->flatMap->attributes->filter(function ($attribute) use ($commonAttributes) {
-            return $commonAttributes->contains($attribute->name);
-        })->unique('name');
-    }
-
-    private function getCommonAttributes()
-    {
-        $attributes = $this->products()->map(function ($product) {
-            return $product->attributes->map(function ($attribute) {
-                return $attribute->name;
-            });
-        });
-
-        if ($attributes->count() > 1) {
-            return collect(call_user_func_array('array_intersect', $attributes->toArray()));
-        }
-
-        return $attributes->flatten();
+        return $this->products()->flatMap->attributes->unique('name');
     }
 }

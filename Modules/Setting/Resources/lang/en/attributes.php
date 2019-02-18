@@ -41,9 +41,17 @@ return [
     'custom_header_assets' => 'Header',
     'custom_footer_assets' => 'Footer',
 
+    'facebook_login_enabled' => 'Status',
+    'facebook_login_app_id' => 'App ID',
+    'facebook_login_app_secret' => 'App Secret',
+
+    'google_login_enabled' => 'Status',
+    'google_login_client_id' => 'Client ID',
+    'google_login_client_secret' => 'Client Secret',
+
     'free_shipping_enabled' => 'Status',
-    'free_shipping_min_amount' => 'Minimum Amount',
     'translatable.free_shipping_label' => 'Label',
+    'free_shipping_min_amount' => 'Minimum Amount',
 
     'local_pickup_enabled' => 'Status',
     'translatable.local_pickup_label' => 'Label',

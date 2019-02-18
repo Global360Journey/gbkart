@@ -12,6 +12,7 @@ class SliderSlideTranslation extends TranslationModel
      * @var array
      */
     protected $fillable = [
+        'file_id',
         'caption_1',
         'caption_2',
         'caption_3',

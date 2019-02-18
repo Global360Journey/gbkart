@@ -31,12 +31,20 @@ class ProductController extends Controller
      */
     public function index(Product $model, ProductFilter $productFilter)
     {
+        $productIds = [];
+
         if (request()->has('query')) {
             $model = $model->search(request('query'));
+            $productIds = $model->keys();
         }
 
-        $products = $model->filter($productFilter)
-            ->paginate(request('perPage', 15))
+        $query = $model->filter($productFilter);
+
+        if (request()->has('category')) {
+            $productIds = (clone $query)->select('id')->pluck('id');
+        }
+
+        $products = $query->paginate(request('perPage', 15))
             ->appends(request()->query());
 
         if (request()->wantsJson()) {
@@ -45,7 +53,7 @@ class ProductController extends Controller
 
         event(new ShowingProductList($products));
 
-        return view('public.products.index', compact('products'));
+        return view('public.products.index', compact('products', 'productIds'));
     }
 
     /**
@@ -57,6 +65,8 @@ class ProductController extends Controller
     public function show($slug)
     {
         $product = Product::findBySlug($slug);
+        $relatedProducts = $product->relatedProducts()->forCard()->get();
+        $upSellProducts = $product->upSellProducts()->forCard()->get();
         $reviews = $this->getReviews($product);
 
         if (setting('reviews_enabled')) {
@@ -65,7 +75,7 @@ class ProductController extends Controller
 
         event(new ProductViewed($product));
 
-        return view('public.products.show', compact('product', 'reviews'));
+        return view('public.products.show', compact('product', 'relatedProducts', 'upSellProducts', 'reviews'));
     }
 
     /**
@@ -76,10 +86,10 @@ class ProductController extends Controller
      */
     private function getReviews($product)
     {
-        if (setting('reviews_enabled')) {
-            return $product->reviews()->paginate(15, ['*'], 'reviews');
+        if (! setting('reviews_enabled')) {
+            return collect();
         }
 
-        return collect();
+        return $product->reviews()->paginate(15, ['*'], 'reviews');
     }
 }

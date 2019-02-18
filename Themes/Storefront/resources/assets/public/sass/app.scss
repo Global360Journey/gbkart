@@ -3,6 +3,7 @@
 @import '~animate.css/animate';
 @import '~slick-carousel/slick/slick.scss';
 @import '~slick-carousel/slick/slick-theme.scss';
+@import '~slick-lightbox/dist/slick-lightbox.css';
 @import '~nouislider/distribute/nouislider';
 @import '~drift-zoom/dist/drift-basic';
 @import 'variables';
@@ -44,17 +45,22 @@
 @import 'footer';
 @import 'quick-view';
 @import 'utilities';
-@import 'jquery.tosrus.all';
 @import 'button-loading';
 @import 'selectize';
 
 html {
+    direction: ltr;
     min-width: 350px;
 }
 
 body {
     font-family: $font-opensans;
     font-size: 16px;
+    overflow-x: hidden;
+}
+
+.main {
+    position: relative;
     overflow-x: hidden;
 }
 
@@ -95,6 +101,10 @@ body {
     padding-bottom: 50px;
 }
 
+.header-wrapper + .content-wrapper {
+    margin-top: 20px;
+}
+
 .autocomplete-suggestions {
     top: 103px !important;
     max-height: none !important;
@@ -128,10 +138,6 @@ body {
     }
 }
 
-.tos-desktop .tos-wrapper.tos-fixed {
-    background: #ffffff !important;
-}
-
 .drift-bounding-box {
     height: 100px !important;
     width: 100px !important;
@@ -146,11 +152,18 @@ body {
     }
 }
 
-.modal.in {
-    ~ .drift-zoom-pane {
-        &.drift-inline {
-            z-index: 1094 !important;
+.rtl {
+    .drift-zoom-pane {
+        img {
+            right: 0;
         }
+    }
+}
+
+.modal.in {
+    ~ .drift-bounding-box,
+    ~ .drift-zoom-pane.drift-inline {
+        z-index: 1094 !important;
     }
 }
 

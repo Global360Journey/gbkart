@@ -7,6 +7,7 @@ use Modules\Cart\Facades\Cart;
 use Modules\Menu\Entities\Menu;
 use Modules\Media\Entities\File;
 use Modules\Menu\MegaMenu\MegaMenu;
+use Illuminate\Support\Facades\Cache;
 use Modules\Category\Entities\Category;
 
 class LayoutComposer
@@ -54,9 +55,7 @@ class LayoutComposer
 
     private function getLogo($key)
     {
-        if (! is_null($id = setting($key))) {
-            return File::findOrNew($id)->path;
-        }
+        return File::findOrNew(setting($key))->path;
     }
 
     private function getCategories()
@@ -81,7 +80,7 @@ class LayoutComposer
 
     private function getShouldExpandCategoryMenu()
     {
-        $layout = setting('storefront_layout', 'default');
+        $layout = storefront_layout();
 
         if ($layout === 'default') {
             return request()->routeIs('home');
@@ -96,7 +95,11 @@ class LayoutComposer
 
     private function getBrands()
     {
-        return File::find(setting('storefront_brands', []));
+        $brands = setting('storefront_brands', []);
+
+        return Cache::rememberForever('storefront_brands.' . serialize($brands), function () use ($brands) {
+            return File::find($brands);
+        });
     }
 
     private function getFooterLogo()
@@ -106,14 +109,12 @@ class LayoutComposer
 
     private function getFooterMenu()
     {
-        if (is_null(setting('storefront_footer_menu'))) {
-            return collect();
-        }
+        $menuId = setting('storefront_footer_menu');
 
-        return Menu::findOrNew(setting('storefront_footer_menu'))
-            ->menuItems()
-            ->with(['category', 'page'])
-            ->get();
+        return Cache::tags(['menu_items', 'categories', 'pages', 'settings'])
+            ->rememberForever("storefront_footer_menu.{$menuId}:" . locale(), function () use ($menuId) {
+                return Menu::for($menuId);
+            });
     }
 
     private function getSocialLinks()

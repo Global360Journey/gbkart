@@ -17,7 +17,13 @@
         @stack('meta')
 
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Rubik:400,500" rel="stylesheet">
-        <link rel="stylesheet" href="{{ v(Theme::url('public/css/app.css')) }}">
+
+        @if (is_rtl())
+            <link rel="stylesheet" href="{{ v(Theme::url('public/css/app.rtl.css')) }}">
+        @else
+            <link rel="stylesheet" href="{{ v(Theme::url('public/css/app.css')) }}">
+        @endif
+
         <link rel="shortcut icon" href="{{ $favicon }}" type="image/x-icon">
 
         @stack('styles')
@@ -39,55 +45,56 @@
         @routes
     </head>
 
-    <body class="{{ $theme }} {{ storefront_layout() }}">
+    <body class="{{ $theme }} {{ storefront_layout() }} {{ is_rtl() ? 'rtl' : 'ltr' }}">
         <!--[if lt IE 8]>
             <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <div class="wrapper">
-            @include('public.partials.top_nav')
-            @include('public.partials.header')
-            @include('public.partials.navbar')
-            @include('public.partials.sidebar')
+        <div class="main">
+            <div class="wrapper">
+                @include('public.partials.sidebar')
+                @include('public.partials.top_nav')
+                @include('public.partials.header')
+                @include('public.partials.navbar')
 
-            <div class="content-wrapper clearfix {{ request()->routeIs('cart.index') ? 'cart-page' : '' }}">
-                <div class="container">
-                    @include('public.partials.breadcrumb')
-
-                    @unless (request()->routeIs('home') || request()->routeIs('login') || request()->routeIs('register') || request()->routeIs('reset') || request()->routeIs('reset.complete'))
-                        @include('public.partials.notification')
-                    @endunless
-
-                    @yield('content')
-                </div>
-            </div>
-
-            @if ($brands->isNotEmpty())
-                <section class="brands-wrapper">
+                <div class="content-wrapper clearfix {{ request()->routeIs('cart.index') ? 'cart-page' : '' }}">
                     <div class="container">
-                        <div class="brands">
-                            @foreach ($brands as $brand)
-                                <div class="col-md-3">
-                                    <img src="{{ $brand->path }}">
-                                </div>
-                            @endforeach
-                        </div>
+                        @include('public.partials.breadcrumb')
+
+                        @unless (request()->routeIs('home') || request()->routeIs('login') || request()->routeIs('register') || request()->routeIs('reset') || request()->routeIs('reset.complete'))
+                            @include('public.partials.notification')
+                        @endunless
+
+                        @yield('content')
                     </div>
-                </section>
-            @endif
+                </div>
 
-            @include('public.partials.footer')
+                @if ($brands->isNotEmpty() && request()->routeIs('home'))
+                    <section class="brands-wrapper">
+                        <div class="container">
+                            <div class="brands">
+                                @foreach ($brands as $brand)
+                                    <div class="col-md-3">
+                                        <img src="{{ $brand->path }}">
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </section>
+                @endif
 
-            <a class="scroll-top" href="#">
-                <i class="fa fa-angle-up" aria-hidden="true"></i>
-            </a>
+                @include('public.partials.footer')
+
+                <a class="scroll-top" href="#">
+                    <i class="fa fa-angle-up" aria-hidden="true"></i>
+                </a>
+            </div>
         </div>
 
         @include('public.partials.quick_view_modal')
 
         <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
         <script src="{{ v(Theme::url('public/js/app.js')) }}"></script>
-        <script src="{{ v(Theme::url('public/js/tosrus.js')) }}"></script>
 
         @stack('scripts')
 

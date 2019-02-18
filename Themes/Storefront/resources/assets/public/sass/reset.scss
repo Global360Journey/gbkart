@@ -374,8 +374,11 @@ textarea:-ms-input-placeholder {
 }
 
 .radio {
-    overflow: auto;
     text-align: left;
+
+    input:not([type="checkbox"]):not([type="select-multiple"]) {
+        height: auto !important;
+    }
 
     label {
         @include themify {
@@ -507,6 +510,10 @@ textarea:-ms-input-placeholder {
 
     > li.active > a {
         border: none !important;
+
+        @include themify {
+            color: themed('black-lite');
+        }
 
         &:after {
             width: 100%;

@@ -32,21 +32,22 @@ class Translation extends Model
     protected $translatedAttributes = ['value'];
 
     /**
-     * Clear translations cache.
-     *
-     * @return bool
-     */
-    public static function clearCache()
-    {
-        return Cache::flush();
-    }
-
-    /**
      * Retrieve all translations.
      *
      * @return void
      */
     public static function retrieve()
+    {
+        if (! config('app.cache')) {
+            return self::getTranslations();
+        }
+
+        return Cache::tags('translations')->rememberForever('translations.all', function () {
+            return self::getTranslations();
+        });
+    }
+
+    protected static function getTranslations()
     {
         return array_replace_recursive(static::getFileTranslations(), static::getDatabaseTranslations());
     }
@@ -56,7 +57,7 @@ class Translation extends Model
      *
      * @return array
      */
-    private static function getFileTranslations()
+    public static function getFileTranslations()
     {
         $translations = [];
 
@@ -80,31 +81,16 @@ class Translation extends Model
      *
      * @return array
      */
-    private static function getDatabaseTranslations()
+    public static function getDatabaseTranslations()
     {
-        $translations = static::with(['translations' => function ($query) {
-            $query->withoutGlobalScope('locale');
-        }])->get();
+        $translations = [];
 
-        return self::formatTranslations($translations);
-    }
-
-    /**
-     * Format database translations.
-     *
-     * @param \Illuminate\Database\Eloquent\Collection $translations
-     * @return array
-     */
-    private static function formatTranslations($translations)
-    {
-        $formatted = [];
-
-        foreach ($translations as $translation) {
+        foreach (static::all() as $translation) {
             foreach ($translation->translations as $translationTranslation) {
-                $formatted[$translation->key][$translationTranslation->locale] = $translationTranslation->value;
+                $translations[$translation->key][$translationTranslation->locale] = $translationTranslation->value;
             }
         }
 
-        return $formatted;
+        return $translations;
     }
 }

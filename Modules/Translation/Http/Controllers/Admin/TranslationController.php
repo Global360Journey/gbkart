@@ -34,8 +34,6 @@ class TranslationController extends Controller
                 ['value' => request('value', '')]
             );
 
-        Translation::clearCache();
-
         return trans('admin::messages.resource_saved', ['resource' => trans('translation::translations.translation')]);
     }
 }

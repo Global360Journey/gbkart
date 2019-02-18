@@ -69,7 +69,7 @@ class Builder
      *
      * @return array
      */
-    private function keys()
+    public function keys()
     {
         if (empty($this->keys)) {
             $this->keys = $this->scoutBuilder->keys()->all();
@@ -98,7 +98,9 @@ class Builder
     {
         $ids = implode(',', $this->keys());
 
-        $query->orderByRaw("FIELD({$this->model->getQualifiedKeyName()}, {$ids})");
+        if (! empty($ids)) {
+            $query->orderByRaw("FIELD({$this->model->getQualifiedKeyName()}, {$ids})");
+        }
     }
 
     /**

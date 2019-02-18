@@ -27,6 +27,10 @@ class SettingTabs extends Tabs
             ->add($this->mail())
             ->add($this->customCssJs());
 
+        $this->group('social_logins', trans('setting::settings.tabs.group.social_logins'))
+            ->add($this->facebook())
+            ->add($this->google());
+
         $this->group('shipping_methods', trans('setting::settings.tabs.group.shipping_methods'))
             ->add($this->freeShipping())
             ->add($this->localPickup())
@@ -52,7 +56,7 @@ class SettingTabs extends Tabs
                 'supported_locales.*',
                 'default_locale',
                 'default_timezone',
-                'customer_role'
+                'customer_role',
             ]);
 
             $tab->view('setting::admin.settings.tabs.general', [
@@ -133,6 +137,38 @@ class SettingTabs extends Tabs
         $currencyRateExchangeServices = ['' => trans('setting::settings.form.select_service')];
 
         return $currencyRateExchangeServices += trans('currency::services');
+    }
+
+    private function facebook()
+    {
+        return tap(new Tab('facebook', trans('setting::settings.tabs.facebook')), function (Tab $tab) {
+            $tab->weight(38);
+
+            $tab->fields([
+                'facebook_login_enabled',
+                'translatable.facebook_login_label',
+                'facebook_login_app_id',
+                'facebook_login_app_secret',
+            ]);
+
+            $tab->view('setting::admin.settings.tabs.facebook');
+        });
+    }
+
+    private function google()
+    {
+        return tap(new Tab('google', trans('setting::settings.tabs.google')), function (Tab $tab) {
+            $tab->weight(39);
+
+            $tab->fields([
+                'google_login_enabled',
+                'translatable.google_login_label',
+                'google_login_client_id',
+                'google_login_client_secret',
+            ]);
+
+            $tab->view('setting::admin.settings.tabs.google');
+        });
     }
 
     private function freeShipping()

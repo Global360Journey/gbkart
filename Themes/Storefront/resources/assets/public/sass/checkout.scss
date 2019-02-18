@@ -124,13 +124,14 @@
             width: 5px;
             opacity: 0;
             margin: 0 auto;
-            border: 10px solid transparent;
+            border: 8px solid transparent;
             transition: 200ms ease-in-out;
         }
 
         &.active:after {
             bottom: 0;
             opacity: 1;
+
             @include themify {
                 border-bottom-color: themed('primary');
             }
@@ -365,7 +366,6 @@
         float: none;
 
         ~ .continue-button {
-            float: left !important;
             margin-top: 5px;
         }
 

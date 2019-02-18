@@ -52,9 +52,19 @@ class Menu extends Model
         static::addActiveGlobalScope();
     }
 
+    public static function for($menuId)
+    {
+        return static::findOrNew($menuId)
+            ->menuItems()
+            ->with(['category', 'page'])
+            ->get()
+            ->noCleaning()
+            ->nest();
+    }
+
     public function menuItems()
     {
-        return $this->hasMany(MenuItem::class);
+        return $this->hasMany(MenuItem::class)->orderByRaw('-position DESC');
     }
 
     /**

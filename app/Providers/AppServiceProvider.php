@@ -2,7 +2,9 @@
 
 namespace FleetCart\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
 use FloatingPoint\Stylist\StylistServiceProvider;
 use Nwidart\Modules\LaravelModulesServiceProvider;
@@ -18,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        if (Request::secure()) {
+            URL::forceScheme('https');
+        }
     }
 
     /**

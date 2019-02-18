@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>
-            @yield('title') - Global360kart Admin
+            @yield('title') - FleetCart Admin
         </title>
 
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -22,10 +22,12 @@
         @include('admin::partials.globals')
     </head>
 
-    <body class="skin-blue sidebar-mini offcanvas">
-        <div class="wrapper">
-            @include('admin::partials.sidebar')
+    <body class="skin-blue sidebar-mini offcanvas clearfix {{ is_rtl() ? 'rtl' : 'ltr' }}">
+        <div class="left-side"></div>
 
+        @include('admin::partials.sidebar')
+
+        <div class="wrapper">
             <div class="content-wrapper">
                 @include('admin::partials.top_nav')
 
@@ -40,10 +42,10 @@
                 </section>
 
                 <div id="notification-toast"></div>
-
-                @include('admin::partials.footer')
             </div>
         </div>
+
+        @include('admin::partials.footer')
 
         @include('admin::partials.confirmation_modal')
 

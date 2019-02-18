@@ -6,13 +6,19 @@
 
 .add-root-category {
     display: table;
-    border: 1px solid #dddddd;
 }
 
 .add-sub-category {
     display: table;
     margin: 5px 0 10px;
-    border: 1px solid #dddddd;
+}
+
+.rtl {
+    .jstree-default {
+        &.jstree-rtl .jstree-node {
+            background-position: 0% 1px;
+        }
+    }
 }
 
 #category-form .loading-spinner {

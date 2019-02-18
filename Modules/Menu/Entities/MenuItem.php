@@ -166,11 +166,11 @@ class MenuItem extends Model
         }
 
         if ($this->isPageType()) {
-            return optional($this->page)->slug;
+            return optional($this->page)->url();
         }
 
         if ($this->isUrlType()) {
-            return $this->url;
+            return localized_url(locale(), $this->url);
         }
     }
 
@@ -199,7 +199,6 @@ class MenuItem extends Model
         return static::withoutGlobalScope('active')
             ->where('id', '!=', $menuItemId)
             ->where('menu_id', $menuId)
-            ->orderByRaw('-position DESC')
             ->get()
             ->noCleaning()
             ->nest()

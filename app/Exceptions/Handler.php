@@ -4,6 +4,7 @@ namespace FleetCart\Exceptions;
 
 use Exception;
 use Illuminate\Http\Response;
+use Swift_TransportException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -41,6 +42,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof Swift_TransportException) {
+            return back()->withInput()
+                ->with('error', trans('core::messages.mail_is_not_configured'));
+        }
+
         if ($this->shouldRedirectToAdminDashboard($e)) {
             return redirect()->route('admin.dashboard.index');
         }
@@ -60,7 +66,7 @@ class Handler extends ExceptionHandler
      */
     private function shouldRedirectToAdminDashboard(Exception $e)
     {
-        if (config('app.debug') || ! $this->container['inBackend']) {
+        if (config('app.installed') || config('app.debug') || ! $this->container['inBackend']) {
             return false;
         }
 
@@ -75,7 +81,7 @@ class Handler extends ExceptionHandler
      */
     private function shouldShowNotFoundPage(Exception $e)
     {
-        if ($this->container['inBackend']) {
+        if (config('app.installed') && $this->container['inBackend']) {
             return false;
         }
 

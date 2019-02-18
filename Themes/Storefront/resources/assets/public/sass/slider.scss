@@ -18,11 +18,17 @@
         margin: 0;
     }
 
+    .slick-slide {
+        float: left;
+    }
+
     .slick-prev {
         left: 15px;
+        right: auto;
     }
 
     .slick-next {
+        left: auto;
         right: 15px;
     }
 
@@ -106,8 +112,10 @@
 }
 
 @media screen and (max-width: $md) {
-    .home-slider {
-        margin-left: 0;
+    .default {
+        .home-slider {
+            margin-left: 0;
+        }
     }
 
     .slide {

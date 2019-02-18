@@ -20,6 +20,14 @@ $('#search_engine').on('change', (e) => {
     $(`.search-engine#${e.currentTarget.value}`).removeClass('hide');
 });
 
+$('#facebook_login_enabled').on('change', () => {
+    $('#facebook-login-fields').toggleClass('hide');
+});
+
+$('#google_login_enabled').on('change', () => {
+    $('#google-login-fields').toggleClass('hide');
+});
+
 $('#paypal_express_enabled').on('change', () => {
     $('#paypal-express-fields').toggleClass('hide');
 });

@@ -103,17 +103,13 @@
 
     .ribbon.bg-green {
         &:after {
-            @include themify {
-                border-color: transparent themed('success') themed('success') transparent;
-            }
+            border-color: transparent rgba(55, 188, 155, 0.9) rgba(55, 188, 155, 0.9) transparent;
         }
     }
 
     .ribbon.bg-red {
         &:after {
-            @include themify {
-                border-color: transparent themed('danger') themed('danger') transparent;
-            }
+            border-color: transparent rgba(255, 51, 102, .9) rgba(255, 51, 102, .9) transparent;
         }
     }
 
@@ -144,6 +140,14 @@
             @include themify {
                 color: themed('gray-dark');
             }
+
+            &:hover {
+                text-decoration: underline;
+
+                @include themify {
+                    color: themed('black-lite');
+                }
+            }
         }
     }
 
@@ -164,7 +168,9 @@
 
         .btn-wishlist,
         .btn-compare {
-            transform: translateY(0px);
+            > i {
+                transform: translateY(0px);
+            }
         }
 
         .product-content {
@@ -187,15 +193,16 @@
         font-size: 18px;
         padding: 0;
         background: transparent;
-        transform: translateY(40px);
         transition: 200ms ease-in-out;
 
         @include themify {
             color: themed('gray-dark');
         }
 
-        i {
+        > i {
             margin: 0;
+            transform: translateY(40px);
+            transition: 200ms ease-in-out;
         }
 
         &:hover {
@@ -248,6 +255,32 @@
 
         &[disabled] {
             opacity: 0.65;
+        }
+    }
+}
+
+.rtl {
+    .product-card {
+        .btn-wishlist {
+            & + .tooltip.left {
+                .tooltip-arrow {
+                    left: 0;
+                    right: auto;
+                    border-width: 5px 5px 5px 0;
+                    border-right-color: #000000;
+                }
+            }
+        }
+
+        .btn-compare {
+            & + .tooltip.right {
+                .tooltip-arrow {
+                    left: auto;
+                    right: 0;
+                    border-width: 5px 0 5px 5px;
+                    border-left-color: #000000;
+                }
+            }
         }
     }
 }

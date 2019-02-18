@@ -49,19 +49,24 @@ class Slider extends Model
 
     public function clearCache()
     {
-        Cache::flush();
+        Cache::tags(["sliders.{$this->id}"])->flush();
     }
 
     public static function findWithSlides($id)
     {
-        return Cache::rememberForever("slider_with_slides.{$id}:" . locale(), function () use ($id) {
-            return static::with('slides')->find($id);
-        });
+        if (is_null($id)) {
+            return;
+        }
+
+        return Cache::tags(["sliders.{$id}"])
+            ->rememberForever("sliders.{$id}:" . locale(), function () use ($id) {
+                return static::with('slides')->find($id);
+            });
     }
 
     public function slides()
     {
-        return $this->hasMany(SliderSlide::class);
+        return $this->hasMany(SliderSlide::class)->orderBy('position');
     }
 
     public function getAutoplaySpeedAttribute($autoplaySpeed)
@@ -88,8 +93,11 @@ class Slider extends Model
             $this->slides()->whereIn('id', $ids)->delete();
         }
 
-        foreach ($slides as $slide) {
-            $this->slides()->updateOrCreate(['id' => $slide['id']], $slide);
+        foreach (array_reset_index($slides) as $index => $slide) {
+            $this->slides()->updateOrCreate(
+                ['id' => $slide['id']],
+                $slide + ['position' => $index]
+            );
         }
     }
 

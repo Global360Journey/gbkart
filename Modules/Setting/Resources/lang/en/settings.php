@@ -5,6 +5,7 @@ return [
     'tabs' => [
         'group' => [
             'general_settings' => 'General Settings',
+            'social_logins' => 'Social Logins',
             'shipping_methods' => 'Shipping Methods',
             'payment_methods' => 'Payment Methods',
         ],
@@ -14,6 +15,8 @@ return [
         'redis' => 'Redis',
         'mail' => 'Mail',
         'custom_css_js' => 'Custom CSS/JS',
+        'facebook' => 'Facebook',
+        'google' => 'Google',
         'free_shipping' => 'Free Shipping',
         'local_pickup' => 'Local Pickup',
         'flat_rate' => 'Flat Rate',
@@ -39,6 +42,8 @@ return [
             'algolia' => 'Algolia',
         ],
         'leave_it_blank_to_disable_fuzzy_search' => 'Leave it blank to disable fuzzy search.',
+        'enable_facebook_login' => 'Enable Facebook Login',
+        'enable_google_login' => 'Enable Goggle Login',
         'enable_free_shipping' => 'Enable Free Shipping',
         'enable_local_pickup' => 'Enable Local Pickup',
         'enable_flat_rate' => 'Enable Flat Rate',

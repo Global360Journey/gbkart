@@ -54,7 +54,11 @@
                                 <td>{{ $attribute->name }}</td>
 
                                 @foreach ($compare->products() as $product)
-                                    <td>{{ $product->attributeValues($attribute->name) }}</td>
+                                    @if ($product->hasAttribute($attribute))
+                                        <td>{{ $product->attributeValues($attribute) }}</td>
+                                    @else
+                                        <td>&ndash;</td>
+                                    @endif
                                 @endforeach
                             </tr>
                         @endforeach

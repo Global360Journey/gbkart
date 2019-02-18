@@ -9,6 +9,10 @@
 @import './ohsnap';
 @import './flatpickr';
 
+html {
+    direction: ltr;
+}
+
 .btn-actions {
     margin: 0 15px 15px 0;
 

@@ -34,7 +34,7 @@ class TranslationServiceProvider extends IlluminateTranslationServiceProvider
 
         Carbon::setLocale(locale());
 
-        $this->addAssets('admin.translations.index', ['admin.translation.css', 'admin.translation.js']);
+        $this->addAdminAssets('admin.translations.index', ['admin.translation.css', 'admin.translation.js']);
     }
 
     /**

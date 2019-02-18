@@ -10,10 +10,14 @@
         }
     }
 
-    span {
+    p {
         font-size: 17px;
         line-height: 28px;
         display: block;
         margin-top: 10px;
+
+        > span {
+            font-weight: 600;
+        }
     }
 }

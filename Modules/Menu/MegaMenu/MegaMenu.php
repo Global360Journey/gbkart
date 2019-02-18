@@ -2,12 +2,12 @@
 
 namespace Modules\Menu\MegaMenu;
 
+use Illuminate\Support\Facades\Cache;
 use Modules\Menu\Entities\Menu as MenuModel;
 
 class MegaMenu
 {
     private $menuId;
-    private $menus;
 
     public function __construct($menuId)
     {
@@ -16,28 +16,16 @@ class MegaMenu
 
     public function menus()
     {
-        if (! is_null($this->menus)) {
-            return $this->menus;
-        }
-
-        return $this->menus = $this->getMenus()->map(function ($menu) {
-            return new Menu($menu);
-        });
+        return Cache::tags(['mega_menu', 'menu_items', 'pages', 'categories'])
+            ->rememberForever("mega_menu.{$this->menuId}:" . locale(), function () {
+                return $this->getMenus()->map(function ($menu) {
+                    return new Menu($menu);
+                });
+            });
     }
 
     private function getMenus()
     {
-        if (is_null($this->menuId)) {
-            return collect();
-        }
-
-        return MenuModel::findOrNew($this->menuId)
-            ->menuItems()
-            ->with(['category', 'page'])
-            ->orderByRaw('-position DESC')
-            ->get()
-            ->noCleaning()
-            ->nest()
-            ->where('menu_id', $this->menuId);
+        return MenuModel::for($this->menuId)->where('menu_id', $this->menuId);
     }
 }

@@ -9,7 +9,7 @@ $.ajaxSetup({
 require('bootstrap');
 require('jquery.easing');
 require('slick-carousel');
+require('slick-lightbox');
 require('jquery-slimscroll');
 require('devbridge-autocomplete');
 require('selectize');
-require('hammerjs');

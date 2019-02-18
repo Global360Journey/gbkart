@@ -21,7 +21,7 @@ class SettingServiceProvider extends ServiceProvider
     {
         TabManager::register('settings', SettingTabs::class);
 
-        $this->addAssets('admin.settings.edit', ['admin.media.css', 'admin.media.js', 'admin.setting.js']);
+        $this->addAdminAssets('admin.settings.edit', ['admin.media.css', 'admin.media.js', 'admin.setting.js']);
     }
 
     /**

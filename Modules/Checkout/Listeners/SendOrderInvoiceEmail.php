@@ -2,6 +2,7 @@
 
 namespace Modules\Checkout\Listeners;
 
+use Swift_TransportException;
 use Modules\Checkout\Mail\Invoice;
 use Illuminate\Support\Facades\Mail;
 
@@ -16,8 +17,12 @@ class SendOrderInvoiceEmail
     public function handle($event)
     {
         if (setting('send_order_invoice_email')) {
-            Mail::to($event->order->customer_email)
-                ->send(new Invoice($event->order));
+            try {
+                Mail::to($event->order->customer_email)
+                    ->send(new Invoice($event->order));
+            } catch (Swift_TransportException $e) {
+                //
+            }
         }
     }
 }

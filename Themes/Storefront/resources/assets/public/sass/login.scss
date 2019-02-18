@@ -56,6 +56,53 @@
 	}
 }
 
+.form-wrapper {
+	.social-login-buttons {
+		margin-top: 15px;
+
+		> span {
+			font-weight: 600;
+			display: block;
+			margin-bottom: 10px;
+		}
+
+		.btn-facebook {
+			background: #4267b2;
+			color: #ffffff;
+			padding: 10px 20px 8px 8px;
+			transition: 200ms ease-in-out;
+
+			&:hover {
+				background: #5176c1;
+			}
+
+			> img {
+				width: 30px;
+				margin: -2px 15px 0 0;
+			}
+		}
+
+		.btn-google {
+			color: #ffffff;
+			background: #4285f4;
+			margin-top: 15px;
+			padding: 3px 20px 1px 1px;
+			transition: 200ms ease-in-out;
+
+			&:hover {
+				background: #5194ff;
+			}
+
+			> img {
+				width: 44px;
+				background: #ffffff;
+				border-radius: 2px;
+				margin: -2px 15px 0 0;
+			}
+		}
+	}
+}
+
 @media screen and (max-width: 415px) {
 	.login-form {
 		.checkbox {

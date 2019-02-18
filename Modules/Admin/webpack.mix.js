@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+let execSync = require('child_process').execSync;
 
 mix.js('Modules/Admin/Resources/assets/js/main.js', 'Modules/Admin/Assets/js/admin.js')
     .js('Modules/Admin/Resources/assets/js/dashboard.js', 'Modules/Admin/Assets/js/dashboard.js')
@@ -24,4 +25,10 @@ let tinymcePlugins = [
 
 tinymcePlugins.forEach(plugin => {
     mix.copy(`Modules/Admin/node_modules/tinymce/plugins/${plugin}/plugin.js`, `Modules/Admin/Assets/js/wysiwyg/plugins/${plugin}`);
+});
+
+mix.then(() => {
+    execSync('npm run rtlcss Modules/Admin/Assets/css/app.css Modules/Admin/Assets/css/app.rtl.css');
+    execSync('npm run rtlcss Modules/Admin/Assets/css/admin.css Modules/Admin/Assets/css/admin.rtl.css');
+    execSync('npm run rtlcss Modules/Admin/Assets/css/dashboard.css Modules/Admin/Assets/css/dashboard.rtl.css');
 });

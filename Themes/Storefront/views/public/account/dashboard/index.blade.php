@@ -22,7 +22,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>{{ trans('storefront::account.orders.order') }}</th>
+                                <th>{{ trans('storefront::account.orders.order_id') }}</th>
                                 <th>{{ trans('storefront::account.orders.date') }}</th>
                                 <th>{{ trans('storefront::account.orders.status') }}</th>
                                 <th>{{ trans('storefront::account.orders.total') }}</th>

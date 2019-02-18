@@ -7,7 +7,7 @@
         <p>Please make sure the PHP extensions listed below are installed.</p>
 
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Extensions</th>

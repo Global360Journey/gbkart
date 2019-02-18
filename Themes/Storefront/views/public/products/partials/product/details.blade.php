@@ -1,6 +1,6 @@
 <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
     <div class="product-details">
-        <h2 class="product-name">{{ $product->name }}</h2>
+        <h1 class="product-name">{{ $product->name }}</h1>
 
         @if (setting('reviews_enabled'))
             @include('public.products.partials.product.rating', ['rating' => $product->avgRating()])

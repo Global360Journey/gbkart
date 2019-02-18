@@ -309,10 +309,15 @@ class Product extends Model
         return $this->qty >= $qty;
     }
 
-    public function attributeValues($name)
+    public function hasAttribute($attribute)
+    {
+        return $this->getAttribute('attributes')->contains('name', $attribute->name);
+    }
+
+    public function attributeValues($attribute)
     {
         return $this->getAttribute('attributes')
-            ->where('name', $name)
+            ->where('name', $attribute->name)
             ->first()
             ->values
             ->implode('value', ', ');
@@ -499,6 +504,11 @@ class Product extends Model
      */
     public function toSearchableArray()
     {
+        // MySQL Full-Text search handles indexing automatically.
+        if (config('scout.driver') === 'mysql') {
+            return [];
+        }
+
         $translations = $this->translations()
             ->withoutGlobalScope('locale')
             ->get(['name', 'description', 'short_description']);

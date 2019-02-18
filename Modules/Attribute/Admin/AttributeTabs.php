@@ -4,6 +4,7 @@ namespace Modules\Attribute\Admin;
 
 use Modules\Admin\Ui\Tab;
 use Modules\Admin\Ui\Tabs;
+use Modules\Category\Entities\Category;
 use Modules\Attribute\Entities\AttributeSet;
 
 class AttributeTabs extends Tabs
@@ -22,12 +23,18 @@ class AttributeTabs extends Tabs
             $tab->active();
             $tab->weight(5);
             $tab->fields(['attribute_set_id', 'name']);
-
-            $attributeSets = AttributeSet::all()->sortBy('name')->pluck('name', 'id');
-            $attributeSets->prepend(trans('attribute::admin.form.please_select'), '');
-
-            $tab->view('attribute::admin.attributes.tabs.general', compact('attributeSets'));
+            $tab->view('attribute::admin.attributes.tabs.general', [
+                'attributeSets' => $this->getAttributeSets(),
+                'categories' => Category::treeList(),
+            ]);
         });
+    }
+
+    private function getAttributeSets()
+    {
+        $attributeSets = AttributeSet::all()->sortBy('name')->pluck('name', 'id');
+
+        return $attributeSets->prepend(trans('attribute::admin.form.please_select'), '');
     }
 
     private function values()

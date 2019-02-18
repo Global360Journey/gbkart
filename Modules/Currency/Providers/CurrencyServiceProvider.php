@@ -27,7 +27,7 @@ class CurrencyServiceProvider extends ServiceProvider
 
         TabManager::register('currency_rates', CurrencyRateTabs::class);
 
-        $this->addAssets('admin.currency_rates.index', ['admin.currency.js']);
+        $this->addAdminAssets('admin.currency_rates.index', ['admin.currency.js']);
 
         if ($this->app->runningInConsole() && setting('auto_refresh_currency_rates', false)) {
             $this->commands(RefreshCurrencyRatesCommand::class);

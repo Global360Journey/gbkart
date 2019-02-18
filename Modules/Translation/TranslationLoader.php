@@ -32,11 +32,10 @@ class TranslationLoader extends FileLoader
             return $this->getTranslations($locale, $group, $namespace);
         }
 
-        return Cache::rememberForever("translation_loader.{$locale}.{$group}.{$namespace}", function () use (
-            $locale, $group, $namespace
-        ) {
-            return $this->getTranslations($locale, $group, $namespace);
-        });
+        return Cache::tags('translations')
+            ->rememberForever("translation_loader.{$locale}.{$group}.{$namespace}", function () use ($locale, $group, $namespace) {
+                return $this->getTranslations($locale, $group, $namespace);
+            });
     }
 
     /**
