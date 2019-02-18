@@ -156,7 +156,18 @@ class Money implements JsonSerializable
 
         $numberFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
 
-        return $numberFormatter->formatCurrency($this->amount, $currency);
+        $amount = $numberFormatter->formatCurrency($this->amount, $currency);
+
+        /**
+         * Fix: Hungarian Forint outputs wrong currency format.
+         *
+         * @see https://github.com/MehediDracula/FleetCart/issues/18
+         */
+        if (currency() === 'HUF') {
+            $amount = str_replace(',00', '', $amount);
+        }
+
+        return $amount;
     }
 
     public function jsonSerialize()

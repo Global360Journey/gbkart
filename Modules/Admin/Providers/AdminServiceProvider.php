@@ -23,7 +23,7 @@ class AdminServiceProvider extends ServiceProvider
         View::composer('admin::layout', AssetsComposer::class);
         Paginator::defaultSimpleView('admin::pagination.simple');
 
-        $this->addAssets('admin.dashboard.index', ['admin.dashboard.css', 'admin.dashboard.js']);
+        $this->addAdminAssets('admin.dashboard.index', ['admin.dashboard.css', 'admin.dashboard.js']);
     }
 
     /**

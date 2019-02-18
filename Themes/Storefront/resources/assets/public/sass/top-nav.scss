@@ -23,6 +23,17 @@
     }
 }
 
+.rtl {
+    .top-nav {
+        ul li {
+            a > span {
+                float: right;
+                margin-left: 3px;
+            }
+        }
+    }
+}
+
 .top-nav-left {
     ul {
         margin-left: 0;

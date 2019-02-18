@@ -22,8 +22,9 @@
 	}
 
 	.error-text {
-		h4 {
+		> h4 {
 			margin-top: 2px;
+			color: #737373;
 		}
 	}
 }

@@ -7,7 +7,6 @@ use Modules\Product\RecentlyViewed;
 use Modules\Slider\Entities\Slider;
 use Themes\Storefront\Admin\Banner;
 use Modules\Product\Entities\Product;
-use Themes\Storefront\Admin\SliderBanner;
 
 class HomePageComposer
 {
@@ -38,7 +37,7 @@ class HomePageComposer
     {
         $view->with([
             'slider' => Slider::findWithSlides(setting('storefront_slider')),
-            'sliderBanners' => SliderBanner::all(),
+            'sliderBanners' => Banner::allForSliderBanners(),
             'bannerSectionOneBanners' => $this->getBannerSectionOneBanners(),
             'features' => $this->getFeatures(),
             'carouselProducts' => $this->getCarouselProducts(),

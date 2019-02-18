@@ -4,6 +4,7 @@ return [
     'attributes' => [
         'attribute_set_id' => 'Attribute Set',
         'name' => 'Name',
+        'categories' => 'Categories',
         'is_filterable' => 'Filterable',
     ],
     'attribute_sets' => [

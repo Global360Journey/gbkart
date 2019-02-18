@@ -3,6 +3,7 @@
 use FleetCart\FleetCart;
 use Modules\Support\Locale;
 use Modules\Currency\Currency;
+use Modules\Support\RTLDetector;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Support\Facades\Cookie;
@@ -49,6 +50,19 @@ if (! function_exists('locale')) {
     function locale()
     {
         return app()->getLocale();
+    }
+}
+
+if (! function_exists('is_rtl')) {
+    /**
+     * Determine if the given / current locale is RTL script.
+     *
+     * @param string|null $locale
+     * @return bool
+     */
+    function is_rtl($locale = null)
+    {
+        return RTLDetector::detect($locale ?: locale());
     }
 }
 

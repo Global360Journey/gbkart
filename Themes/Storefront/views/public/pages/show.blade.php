@@ -11,5 +11,7 @@
 @endpush
 
 @section('content')
-    {!! $page->body !!}
+    <div class="page-wrapper clearfix">
+        {!! $page->body !!}
+    </div>
 @endsection

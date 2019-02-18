@@ -28,6 +28,7 @@
 
         .product-name {
             font-size: 15px;
+            transition: 200ms ease-in-out;
 
             @include themify {
                 color: themed('gray-dark');
@@ -35,6 +36,10 @@
 
             &:hover {
                 text-decoration: underline;
+
+                @include themify {
+                    color: themed('black-lite');
+                }
             }
         }
 

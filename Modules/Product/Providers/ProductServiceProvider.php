@@ -22,7 +22,7 @@ class ProductServiceProvider extends ServiceProvider
     {
         TabManager::register('products', ProductTabs::class);
 
-        $this->addAssets('admin.products.(create|edit)', [
+        $this->addAdminAssets('admin.products.(create|edit)', [
             'admin.media.css', 'admin.media.js', 'admin.product.css', 'admin.product.js',
         ]);
     }

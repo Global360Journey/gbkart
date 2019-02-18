@@ -3,6 +3,7 @@
 namespace Modules\Product\Filters;
 
 use Modules\Attribute\Entities\Attribute;
+use Modules\Attribute\Entities\AttributeValue;
 
 class QueryStringFilter
 {
@@ -86,30 +87,29 @@ class QueryStringFilter
 
     public function attribute($query, $attributeFilters)
     {
-        return $query->whereHas('attributes', function ($productAttributesQuery) use ($attributeFilters) {
-            $this->whereAttributesNames($productAttributesQuery, array_keys($attributeFilters))
-                ->whereAttributesValues($productAttributesQuery, array_flatten($attributeFilters));
-        });
+        foreach ($this->getAttributeIds($attributeFilters) as $index => $attributeId) {
+            $query->join("product_attributes as pa_{$index}", 'products.id', '=', "pa_{$index}.product_id")
+                ->whereRaw("pa_{$index}.attribute_id = {$attributeId} AND EXISTS (
+                    SELECT * FROM `product_attribute_values`
+                        WHERE `pa_{$index}`.`id` = `product_attribute_values`.`product_attribute_id`
+                        AND `attribute_value_id` in ({$this->getAttributeValueIds($attributeFilters)})
+                )");
+        }
+
+        return $query;
     }
 
-    private function whereAttributesNames($productAttributesQuery, $attributesNames)
+    private function getAttributeIds($attributeFilters)
     {
-        $productAttributesQuery->whereHas('attribute', function ($attributeQuery) use ($attributesNames) {
-            $attributeQuery->where('is_filterable', true)
-                ->whereTranslationIn('name', $attributesNames, locale());
-        });
-
-        return $this;
+        return Attribute::whereTranslationIn('name', array_keys($attributeFilters))->pluck('id');
     }
 
-    private function whereAttributesValues($productAttributesQuery, $attributesValues)
+    private function getAttributeValueIds($attributeFilters)
     {
-        $productAttributesQuery->whereHas('values', function ($productValuesQuery) use ($attributesValues) {
-            $productValuesQuery->whereHas('attributeValue', function ($attributeValueQuery) use ($attributesValues) {
-                $attributeValueQuery->whereTranslationIn('value', $attributesValues, locale());
-            });
+        return once(function () use ($attributeFilters) {
+            return AttributeValue::whereTranslationIn('value', array_flatten($attributeFilters))
+                ->pluck('id')
+                ->implode(',');
         });
-
-        return $this;
     }
 }

@@ -37,14 +37,14 @@ class UserServiceProvider extends ServiceProvider
         TabManager::register('roles', RoleTabs::class);
         TabManager::register('profile', ProfileTabs::class);
 
-        $this->registerSentinelGuard();
-        $this->registerBladeDirectives();
-
         View::composer('*', CurrentUserComposer::class);
         View::composer('user::admin.auth.layout', AssetsComposer::class);
 
-        $this->addAssets('admin.(login|reset).*', ['admin.login.css', 'admin.login.js']);
-        $this->addAssets('admin.(users|roles).(create|edit)', ['admin.user.css', 'admin.user.js']);
+        $this->addAdminAssets('admin.(login|reset).*', ['admin.login.css', 'admin.login.js']);
+        $this->addAdminAssets('admin.(users|roles).(create|edit)', ['admin.user.css', 'admin.user.js']);
+
+        $this->registerSentinelGuard();
+        $this->registerBladeDirectives();
     }
 
     /**

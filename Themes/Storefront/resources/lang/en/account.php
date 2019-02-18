@@ -17,7 +17,7 @@ return [
         'edit' => 'Edit',
     ],
     'orders' => [
-        'order' => 'Order',
+        'order_id' => 'Order ID',
         'date' => 'Date',
         'status' => 'Status',
         'total' => 'Total',

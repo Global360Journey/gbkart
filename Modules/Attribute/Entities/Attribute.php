@@ -3,6 +3,7 @@
 namespace Modules\Attribute\Entities;
 
 use Modules\Support\Eloquent\Model;
+use Modules\Category\Entities\Category;
 use Modules\Support\Eloquent\Translatable;
 use Modules\Attribute\Admin\AttributeTable;
 
@@ -49,14 +50,19 @@ class Attribute extends Model
     {
         parent::boot();
 
-        static::saved(function ($attribute) {
-            $attribute->saveValues(request('values', []));
+        static::saved(function (self $attribute) {
+            $attribute->saveRelations(request()->all());
         });
     }
 
     public function attributeSet()
     {
         return $this->belongsTo(AttributeSet::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'attribute_categories');
     }
 
     public function values()
@@ -67,6 +73,12 @@ class Attribute extends Model
     public function table()
     {
         return new AttributeTable($this->with('attributeSet'));
+    }
+
+    public function saveRelations(array $attributes)
+    {
+        $this->categories()->sync(array_get($attributes, 'categories', []));
+        $this->saveValues(array_get($attributes, 'values', []));
     }
 
     public function saveValues($values = [])

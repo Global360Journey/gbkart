@@ -2,6 +2,7 @@
 
 namespace Modules\Media\Providers;
 
+use Illuminate\Support\Facades\View;
 use Modules\Support\Traits\AddsAsset;
 use Illuminate\Support\ServiceProvider;
 use Modules\Support\Traits\LoadsConfig;
@@ -18,9 +19,9 @@ class MediaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('media::admin.file_manager.index', AssetsComposer::class);
+        View::composer('media::admin.file_manager.index', AssetsComposer::class);
 
-        $this->addAssets('admin.(media|file_manager).(index|edit)', ['admin.media.css', 'admin.media.js']);
+        $this->addAdminAssets('admin.(media|file_manager).(index|edit)', ['admin.media.css', 'admin.media.js']);
     }
 
     /**

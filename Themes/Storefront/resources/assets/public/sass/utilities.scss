@@ -239,15 +239,11 @@
 }
 
 .bg-green {
-    @include themify {
-        background: themed('success');
-    }
+    background: rgba(55, 188, 155, 0.9);
 }
 
 .bg-red {
-    @include themify {
-        background: themed('danger');
-    }
+    background: rgba(255, 51, 102, .9);
 }
 
 .display-table {
@@ -623,10 +619,7 @@
 
 .box-wrapper {
     border-radius: $radius-default;
-
-    @include themify {
-        border: 1px solid themed('gray-lite');
-    }
+    border: 1px solid #e9e9e9;
 }
 
 .box-header {
@@ -784,7 +777,7 @@
 }
 
 .total-wrapper {
-    margin-top: 5px;
+    margin-top: 20px;
 
     .table {
         width: 300px;
@@ -815,4 +808,25 @@
             }
         }
     }
+}
+
+
+.page-wrapper,
+.description {
+    h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 8px;
+    }
+
+    > ul,
+    > ol {
+        margin-left: 18px;
+
+        > li {
+            line-height: 26px;
+        }
+    }
+}
+
+.page-wrapper {
+    margin-top: 30px;
 }

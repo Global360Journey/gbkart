@@ -25,7 +25,7 @@ class AttributeServiceProvider extends ServiceProvider
         TabManager::register('attribute_sets', AttributeSetTabs::class);
         TabManager::extend('products', ProductTabsExtender::class);
 
-        $this->addAssets('admin.(attributes|products).(create|edit)', ['admin.attribute.css', 'admin.attribute.js']);
+        $this->addAdminAssets('admin.(attributes|products).(create|edit)', ['admin.attribute.css', 'admin.attribute.js']);
     }
 
     /**

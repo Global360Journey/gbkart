@@ -123,7 +123,8 @@ trait HasCrudActions
         $this->searchable($entity);
 
         if (method_exists($this, 'redirectTo')) {
-            return $this->redirectTo($entity);
+            return $this->redirectTo($entity)
+                ->withSuccess(trans('admin::messages.resource_saved', ['resource' => $this->getLabel()]));
         }
 
         return redirect()->route("{$this->getRoutePrefix()}.index")

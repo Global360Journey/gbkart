@@ -99,6 +99,10 @@ td, th {
         float: left;
         width: 50%;
     }
+
+    .rtl .col-sm-6 {
+        float: right;
+    }
 }
 
 @media (min-width: 992px) {
@@ -111,9 +115,18 @@ td, th {
         float: left;
     }
 
+    .rtl .col-md-3,
+    .rtl .col-md-9 {
+        float: right;
+    }
+
     .col-md-12 {
         float: left;
         width: 100%;
+    }
+
+    .rtl .col-md-12 {
+        float: right;
     }
 
     .col-md-9 {
@@ -148,6 +161,10 @@ td, th {
 
 th {
     text-align: left;
+}
+
+.rtl th {
+    text-align: right;
 }
 
 .table {
@@ -275,8 +292,20 @@ table {
     float: right !important;
 }
 
+.rtl .pull-right {
+    float: left !important;
+}
+
 .pull-left {
     float: left !important;
+}
+
+.rtl .pull-left {
+    float: right !important;
+}
+
+.rtl {
+    direction: rtl;
 }
 
 .invoice-wrapper {
@@ -284,15 +313,11 @@ table {
     padding-bottom: 40px;
 
     .invoice-header {
-        margin-top: 15px;
+        margin-top: 40px;
     }
 }
 
 .invoice-header {
-    .invoice-header-right {
-        margin-right: 15px;
-    }
-
     .store-name {
         height: 128px;
         width: 100%;
@@ -305,6 +330,7 @@ table {
         font-weight: 600;
         display: block;
         color: #444444;
+        margin-top: 6px;
     }
 
     .invoice-info {
@@ -319,6 +345,19 @@ table {
             font-size: 15px;
             float: right;
             color: #444444;
+        }
+    }
+}
+
+.rtl {
+    .invoice-header {
+        .invoice-info {
+            margin-left: 0;
+            margin-right: 4px;
+
+            span {
+                float: left;
+            }
         }
     }
 }
@@ -368,31 +407,22 @@ table {
     padding: 4px 0;
 }
 
-.cart-list .table {
-    margin: 0;
-    border-bottom: 1px solid #e9e9e9;
-}
-
-.invoice-body .cart-list {
+.cart-list {
     border: none;
     margin-top: 40px;
 
-    tbody td {
-        padding-top: 16px;
-        padding-bottom: 18px;
+    .table {
+        margin: 0;
+        border-bottom: 1px solid #e9e9e9;
     }
-}
 
-.cart-list {
     thead tr th {
         font-weight: 600;
         font-size: 16px;
         color: #444444;
+        padding-left: 0;
+        padding-right: 0;
         border-bottom: 1px solid #e9e9e9;
-    }
-
-    tbody td:nth-child(4) span {
-        font-weight: 600;
     }
 
     .table-responsive {
@@ -401,7 +431,12 @@ table {
         td {
             border-top: 1px solid #f1f1f1;
             color: #444444;
+            padding: 16px 0 18px;
             vertical-align: middle;
+
+            &:nth-child(4) span {
+                font-weight: 600;
+            }
         }
     }
 
@@ -422,35 +457,58 @@ table {
     }
 }
 
-.invoice-body .total {
-    width: 300px;
-    margin: 15px 15px 0 0;
-}
-
-.total .table {
-    margin-bottom: 0;
-
-    tr:last-child {
-        border-top: 1px solid #e9e9e9;
-    }
-
-    td {
-        font-size: 16px;
-        border: none;
-        color: #444444;
-        padding: 5px 8px;
-
-        &:last-child {
-            text-align: right;
+.rtl {
+    .cart-list {
+        .option {
+            span {
+                span {
+                    margin-left: 0;
+                    margin-right: 2px;
+                }
+            }
         }
     }
+}
 
-    tr:last-child td {
-        font-weight: 600;
+.invoice-body .total {
+    width: 300px;
+    margin: 20px 15px 0 0;
+
+    .table {
+        margin-bottom: 0;
+
+        tr:last-child {
+            border-top: 1px solid #e9e9e9;
+        }
+
+        td {
+            font-size: 16px;
+            border: none;
+            color: #444444;
+            padding: 6px 0;
+
+            &:last-child {
+                text-align: right;
+            }
+        }
+
+        tr:last-child td {
+            font-weight: 600;
+        }
+
+        .coupon-code {
+            font-weight: 600;
+        }
     }
+}
 
-    .coupon-code {
-        font-weight: 600;
+.rtl .invoice-body .total {
+    margin: 20px 0 0 15px;
+
+    .table {
+        td:last-child {
+            text-align: left;
+        }
     }
 }
 
@@ -478,21 +536,9 @@ table {
     .invoice-body .cart-list {
         margin-top: 40px;
     }
-
-    .cart-list .table-responsive {
-        padding: 0;
-    }
-
-    .invoice-body .total {
-        margin-right: 0;
-    }
 }
 
 @media screen and (max-width: 767px) {
-    .invoice-body .cart-list {
-        padding: 0 15px;
-    }
-
     .cart-list {
         .table-responsive td {
             border: none;
@@ -547,8 +593,15 @@ table {
         }
     }
 
-    .invoice-body .total {
-        margin-right: 15px;
+    .rtl .cart-list {
+        tbody td {
+            label {
+                + span {
+                    margin-left: 0;
+                    margin-right: 5px;
+                }
+            }
+        }
     }
 }
 
@@ -561,12 +614,6 @@ table {
 @media screen and (max-width: 530px) {
     .invoice-wrapper {
         padding-bottom: 20px;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    .invoice-body .total {
-        width: 270px;
     }
 }
 
@@ -583,15 +630,52 @@ table {
         .col-md-9 {
             float: right;
         }
+
+        .invoice-header-right {
+            margin-right: 0 !important;
+        }
+    }
+
+    .rtl {
+        .invoice-header {
+            .invoice-header-right {
+                margin-left: 0 !important;
+            }
+        }
+    }
+
+    .rtl {
+        .invoice-header {
+            .col-md-3 {
+                float: right;
+            }
+
+            .col-md-9 {
+                float: left;
+            }
+        }
     }
 
     .invoice-wrapper .invoice-header-right {
         margin-right: 15px;
     }
 
+    .rtl {
+        .invoice-wrapper .invoice-header-right {
+            margin-right: 0;
+            margin-left: 15px;
+        }
+    }
+
     .invoice-details-wrapper .col-md-6 {
         width: 50%;
         float: left;
+    }
+
+    .rtl {
+        .invoice-details-wrapper .col-md-6 {
+            float: right;
+        }
     }
 
     .invoice-details .table td:last-child,

@@ -7,6 +7,20 @@ use Modules\Core\Events\CollectingAssets;
 trait AddsAsset
 {
     /**
+     * Add assets for admin panel.
+     *
+     * @param array|string $routes
+     * @param array $assets
+     * @return void
+     */
+    public function addAdminAssets($routes, array $assets)
+    {
+        if (config('app.installed') && $this->app['inBackend']) {
+            $this->addAssets($routes, $assets);
+        }
+    }
+
+    /**
      * Add given assets to the given routes response.
      *
      * @param array|string $routes

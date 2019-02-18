@@ -71,7 +71,7 @@
                                     {{ csrf_field() }}
                                     {{ method_field('delete') }}
 
-                                    <button type="submit" class="cross-button" data-toggle="tooltip" data-placement="left" title="{{ trans('storefront::layout.mini_cart.remove') }}">
+                                    <button type="submit" class="cross-button" data-toggle="tooltip" data-placement="{{ is_rtl() ? 'right' : 'left' }}" title="{{ trans('storefront::layout.mini_cart.remove') }}">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </form>

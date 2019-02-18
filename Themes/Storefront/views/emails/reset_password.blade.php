@@ -157,6 +157,10 @@
                 transition: 200ms ease-in-out;
             }
 
+            .rtl {
+                direction: rtl;
+            }
+
             .theme-blue .btn-primary {
                 background: #0068e1;
                 color: #fafafa;
@@ -457,7 +461,7 @@
         </style>
     </head>
 
-    <body class="{{ setting('storefront_theme', 'theme-blue') }}">
+    <body class="{{ setting('storefront_theme', 'theme-blue') }} {{ is_rtl() ? 'rtl' : 'ltr' }}">
         <header class="header">
             <div class="col-md-6 col-sm-7 center-block">
                 <h2 class="text-center">

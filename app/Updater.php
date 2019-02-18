@@ -10,6 +10,7 @@ class Updater
     public static function run()
     {
         self::migrate();
+        self::checkHtaccessFile();
         self::clearViewCache();
         self::clearConfigCache();
         self::clearRouteCache();
@@ -22,6 +23,13 @@ class Updater
     {
         if (config('app.installed')) {
             Artisan::call('migrate', ['--force' => true]);
+        }
+    }
+
+    private static function checkHtaccessFile()
+    {
+        if (! File::exists(base_path('.htaccess'))) {
+            File::copy(base_path('.htaccess.example'), base_path('.htaccess'));
         }
     }
 

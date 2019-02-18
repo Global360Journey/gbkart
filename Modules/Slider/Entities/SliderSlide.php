@@ -22,7 +22,7 @@ class SliderSlide extends Model
      *
      * @var array
      */
-    protected $fillable = ['file_id', 'options', 'call_to_action_url', 'open_in_new_window'];
+    protected $fillable = ['options', 'call_to_action_url', 'open_in_new_window', 'position'];
 
     /**
      * The attributes that should be cast to native types.
@@ -40,6 +40,7 @@ class SliderSlide extends Model
      * @var array
      */
     public $translatedAttributes = [
+        'file_id',
         'caption_1',
         'caption_2',
         'caption_3',

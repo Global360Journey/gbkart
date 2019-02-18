@@ -103,7 +103,7 @@
 			}
 
 			> i {
-				margin: 13px 10px 0 0;
+				margin-top: 13px;
 			}
 
 			> a {
@@ -113,7 +113,7 @@
 			ul li {
 
 				i {
-					margin: 7px 10px 0 0;
+					margin-top: 7px;
 				}
 
 				a {
@@ -133,7 +133,8 @@
 		}
 
 		a {
-			display: inline-block;
+			display: block;
+			margin-left: 18px;
 			transition: 200ms ease-in-out;
 
 			@include themify {
@@ -210,6 +211,22 @@
 	}
 }
 
+.rtl {
+	.filter-section {
+		.filter-category {
+			i {
+				transform: rotate(0deg) rotateY(180deg);
+				cursor: pointer;
+	            transition: 200ms ease-in-out;
+
+	            &.open {
+	                transform: rotate(90deg) rotateY(180deg);
+	            }
+			}
+		}
+	}
+}
+
 .price-range-picker {
 	.form-group {
 		margin-bottom: 20px;
@@ -260,6 +277,19 @@
 
 		&:before, &:after {
 			background: transparent;
+		}
+	}
+}
+
+.rtl {
+	.price-range-picker {
+		.noUi-handle {
+			left: -8px !important;
+		}
+
+		.noUi-connect,
+		.noUi-origin {
+			transform-origin: 100% 0;
 		}
 	}
 }
@@ -386,8 +416,22 @@
 		margin-left: 195px;
 	}
 
-	.product-content-inner > a {
-		display: block;
+	.product-name {
+		display: inline-block;
+
+		> h5 {
+			transition: 200ms ease-in-out;
+
+			@include themify {
+				color: themed('gray-dark');
+			}
+
+			&:hover {
+				@include themify {
+					color: themed('black-lite');
+				}
+			}
+		}
 	}
 
 	.product-price {

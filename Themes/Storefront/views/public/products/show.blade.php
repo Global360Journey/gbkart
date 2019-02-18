@@ -60,11 +60,11 @@
 
     @include('public.products.partials.landscape_products', [
         'title' => trans('storefront::product.related_products'),
-        'products' => $product->relatedProducts
+        'products' => $relatedProducts
     ])
 
     @include('public.products.partials.landscape_products', [
         'title' => trans('storefront::product.you_might_also_like'),
-        'products' => $product->upSellProducts
+        'products' => $upSellProducts
     ])
 @endsection

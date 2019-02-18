@@ -18,6 +18,20 @@ class File extends Model
     protected $guarded = [];
 
     /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function ($file) {
+            Storage::disk($file->disk)->delete($file->path);
+        });
+    }
+
+    /**
      * Get the user that uploaded the file.
      *
      * @return void
@@ -33,12 +47,12 @@ class File extends Model
      * @param string $path
      * @return string|null
      */
-     public function getPathAttribute($path)
-     {
-         if (! is_null($path)) {
-             return Storage::disk($this->disk)->url($path);
-         }
-     }
+    public function getPathAttribute($path)
+    {
+        if (! is_null($path)) {
+            return Storage::disk($this->disk)->url($path);
+        }
+    }
 
     /**
      * Determine if the file type is image.

@@ -40,6 +40,17 @@ class MenuController extends Controller
     protected $validation = SaveMenuRequest::class;
 
     /**
+     * Redirect to url after saving a resource.
+     *
+     * @param \Modules\Menu\Entities\Menu $menu
+     * @return \Illuminate\Http\Response
+     */
+    protected function redirectTo($menu)
+    {
+        return redirect()->route('admin.menus.edit', $menu);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
@@ -52,21 +63,9 @@ class MenuController extends Controller
         $menuItems = $menu->menuItems()
             ->withoutGlobalScope('active')
             ->withoutGlobalScope('not_root')
-            ->orderByRaw('-position DESC')
             ->get()
             ->nest();
 
         return view('menu::admin.menus.edit', compact('menu', 'menuItems'));
-    }
-
-    /**
-     * Redirect to url after saving a resource.
-     *
-     * @param \Modules\Menu\Entities\Menu $menu
-     * @return \Illuminate\Http\Response
-     */
-    protected function redirectTo($menu)
-    {
-        return redirect()->route('admin.menus.edit', $menu);
     }
 }

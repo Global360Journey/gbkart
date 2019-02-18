@@ -2,7 +2,7 @@
 
 namespace Modules\User\Guards;
 
-use App\User;
+use Modules\User\Entities\User;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel as SentinelFacade;

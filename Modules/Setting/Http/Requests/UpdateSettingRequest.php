@@ -34,46 +34,65 @@ class UpdateSettingRequest extends Request
             'customer_role' => ['required', Rule::exists('roles', 'id')],
             'supported_currencies.*' => ['required', Rule::in(Currency::codes())],
             'default_currency' => 'required|in_array:supported_currencies.*',
+
             'translatable.store_name' => 'required',
             'store_email' => 'required|email',
             'store_country' => ['required', Rule::in(Country::codes())],
+
             'fixer_access_key' => 'required_if:currency_rate_exchange_service,fixer',
             'forge_api_key' => 'required_if:currency_rate_exchange_service,forge',
             'currency_data_feed_api_key' => 'required_if:currency_rate_exchange_service,currency_data_feed',
             'auto_refresh_currency_rates' => 'required|boolean',
             'auto_refresh_currency_rate_frequency' => ['required_if:auto_refresh_currency_rates,1', Rule::in($this->refreshFrequencies())],
+
             'mail_from_address' => 'nullable|email',
+
+            'facebook_login_enabled' => 'required|boolean',
+            'facebook_login_app_id' => 'required_if:facebook_login_enabled,1',
+            'facebook_login_app_secret' => 'required_if:facebook_login_enabled,1',
+
+            'google_login_enabled' => 'required|boolean',
+            'google_login_client_id' => 'required_if:google_login_enabled,1',
+            'google_login_client_secret' => 'required_if:google_login_enabled,1',
+
             'free_shipping_enabled' => 'required|boolean',
             'free_shipping_min_amount' => 'nullable|numeric',
             'translatable.free_shipping_label' => 'required',
+
             'local_pickup_enabled' => 'required|boolean',
             'translatable.local_pickup_label' => 'required',
-            'flat_rate_cost' => ['required_if:local_pickup_enabled,1', 'nullable', 'numeric'],
+            'local_pickup_cost' => ['required_if:local_pickup_enabled,1', 'nullable', 'numeric'],
+
             'flat_rate_enabled' => 'required|boolean',
             'translatable.flat_rate_label' => 'required',
             'flat_rate_cost' => ['required_if:flat_rate_enabled,1', 'nullable', 'numeric'],
+
             'paypal_express_enabled' => 'required|boolean',
-            'translatable.paypal_express_label' => 'required',
-            'translatable.paypal_express_description' => 'required',
+            'translatable.paypal_express_label' => 'required_if:paypal_express_enabled,1',
+            'translatable.paypal_express_description' => 'required_if:paypal_express_enabled,1',
             'paypal_express_test_mode' => 'required|boolean',
             'paypal_express_username' => 'required_if:paypal_express_enabled,1',
             'paypal_express_password' => 'required_if:paypal_express_enabled,1',
             'paypal_express_signature' => 'required_if:paypal_express_enabled,1',
+
             'stripe_enabled' => 'required|boolean',
-            'translatable.stripe_label' => 'required',
-            'translatable.stripe_description' => 'required',
+            'translatable.stripe_label' => 'required_if:stripe_enabled,1',
+            'translatable.stripe_description' => 'required_if:stripe_enabled,1',
             'stripe_publishable_key' => 'required_if:stripe_enabled,1',
             'stripe_secret_key' => 'required_if:stripe_enabled,1',
+
             'cod_enabled' => 'required|boolean',
-            'translatable.cod_label' => 'required',
-            'translatable.cod_description' => 'required',
+            'translatable.cod_label' => 'required_if:cod_enabled,1',
+            'translatable.cod_description' => 'required_if:cod_enabled,1',
+
             'bank_transfer_enabled' => 'required|boolean',
-            'translatable.bank_transfer_label' => 'required',
-            'translatable.bank_transfer_description' => 'required',
+            'translatable.bank_transfer_label' => 'required_if:bank_transfer_enabled,1',
+            'translatable.bank_transfer_description' => 'required_if:bank_transfer_enabled,1',
             'translatable.bank_transfer_instructions' => 'required_if:bank_transfer_enabled,1',
+
             'check_payment_enabled' => 'required|boolean',
-            'translatable.check_payment_label' => 'required',
-            'translatable.check_payment_description' => 'required',
+            'translatable.check_payment_label' => 'required_if:check_payment_enabled,1',
+            'translatable.check_payment_description' => 'required_if:check_payment_enabled,1',
             'translatable.check_payment_instructions' => 'required_if:check_payment_enabled,1',
         ];
     }

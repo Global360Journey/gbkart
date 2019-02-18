@@ -17,6 +17,13 @@
       0 => 'BeyondCode\\DumpServer\\DumpServerServiceProvider',
     ),
   ),
+  'beyondcode/laravel-query-detector' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'BeyondCode\\QueryDetector\\QueryDetectorServiceProvider',
+    ),
+  ),
   'cartalyst/sentinel' => 
   array (
     'providers' => 
@@ -76,6 +83,17 @@
       0 => 'Illuminate\\Notifications\\SlackChannelServiceProvider',
     ),
   ),
+  'laravel/socialite' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
+    ),
+  ),
   'laravel/tinker' => 
   array (
     'providers' => 
@@ -118,6 +136,13 @@
     'providers' => 
     array (
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    ),
+  ),
+  'swayok/alternative-laravel-cache' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'AlternativeLaravelCache\\Provider\\AlternativeCacheStoresServiceProvider',
     ),
   ),
   'tightenco/ziggy' => 

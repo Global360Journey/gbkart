@@ -3,16 +3,21 @@
 
     .footer-top {
         .footer-logo {
-            display: inline-block;
+            display: flex;
+            height: 64px;
+            width: 200px;
+            align-items: center;
             text-decoration: none;
 
-            > img {
-                width: 200px;
-            }
-
-            > h2 {
+            h2 {
                 color: #fafafa;
             }
+
+            img {
+                max-height: 100%;
+                max-width: 100%;
+            }
+
         }
 
         .footer-brief {

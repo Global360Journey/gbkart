@@ -107,21 +107,30 @@ abstract class BaseAuthController extends Controller
      * Register a user.
      *
      * @param \Modules\User\Http\Requests\RegisterRequest $request
-     * @param \Modules\User\Contracts\Authentication $auth
      * @return \Illuminate\Http\Response
      */
-    public function postRegister(RegisterRequest $request, Authentication $auth)
+    public function postRegister(RegisterRequest $request)
     {
-        $user = $this->auth->registerAndActivate($request->all());
+        $user = $this->auth->registerAndActivate($request->only([
+            'first_name',
+            'last_name',
+            'email',
+            'password',
+        ]));
 
-        $role = Role::findOrNew(setting('customer_role'));
-
-        if ($role->exists) {
-            $auth->assignRole($user, $role);
-        }
+        $this->assignCustomerRole($user);
 
         return redirect($this->loginUrl())
             ->withSuccess(trans('user::messages.users.account_created'));
+    }
+
+    protected function assignCustomerRole($user)
+    {
+        $role = Role::findOrNew(setting('customer_role'));
+
+        if ($role->exists) {
+            $this->auth->assignRole($user, $role);
+        }
     }
 
     /**

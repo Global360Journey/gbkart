@@ -15,11 +15,4 @@ class HomeController extends Controller
     {
         return view('public.home.index');
     }
-
-    private function determineFullWidthSlider()
-    {
-        $theme = setting('storefront_layout');
-
-        return $theme === 'full_width_slider_collapsed_menu' || $theme == 'full_width_slider_expanded_menu';
-    }
 }

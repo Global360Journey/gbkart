@@ -20,7 +20,7 @@ class PageTabs extends Tabs
         return tap(new Tab('general', trans('page::pages.tabs.general')), function (Tab $tab) {
             $tab->active();
             $tab->weight(5);
-            $tab->fields(['title', 'body', 'is_active']);
+            $tab->fields(['title', 'body', 'is_active', 'slug']);
             $tab->view('page::admin.pages.tabs.general');
         });
     }

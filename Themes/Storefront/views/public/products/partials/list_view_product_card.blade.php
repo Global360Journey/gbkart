@@ -19,8 +19,8 @@
 
     <div class="product-content clearfix">
         <div class="product-content-inner">
-            <a href="{{ route('products.show', $product->slug) }}">
-                <h5 class="product-name">{{ $product->name }}</h5>
+            <a href="{{ route('products.show', $product->slug) }}" class="product-name">
+                <h5>{{ $product->name }}</h5>
             </a>
 
             <span class="product-price">{{ product_price($product) }}</span>
@@ -34,7 +34,7 @@
 
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                <button type="submit" data-toggle="tooltip" data-placement="right" title="{{ trans('storefront::product_card.add_to_wishlist') }}" class="btn btn-wishlist">
+                <button type="submit" data-toggle="tooltip" data-placement="top" title="{{ trans('storefront::product_card.add_to_wishlist') }}" class="btn btn-wishlist">
                     <i class="fa fa-heart-o" aria-hidden="true"></i>
                 </button>
             </form>
@@ -44,7 +44,7 @@
 
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                <button type="submit" data-toggle="tooltip" data-placement="left" title="{{ trans('storefront::product_card.add_to_compare') }}" class="btn btn-compare">
+                <button type="submit" data-toggle="tooltip" data-placement="top" title="{{ trans('storefront::product_card.add_to_compare') }}" class="btn btn-compare">
                     <i class="fa fa-bar-chart" aria-hidden="true"></i>
                 </button>
             </form>

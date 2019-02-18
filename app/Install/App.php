@@ -3,6 +3,7 @@
 namespace FleetCart\Install;
 
 use Modules\User\Entities\Role;
+use Illuminate\Support\Facades\File;
 use Modules\Setting\Entities\Setting;
 use Illuminate\Support\Facades\Artisan;
 use Modules\Currency\Entities\CurrencyRate;
@@ -18,11 +19,12 @@ class App
         $this->setAppSettings();
         $this->createDefaultCurrencyRate();
         $this->createSymlinkForPublicDisk();
+        $this->copyHtaccessFile();
     }
 
     private function generateAppKey()
     {
-        Artisan::call('key:generate');
+        Artisan::call('key:generate', ['--force' => true]);
     }
 
     private function setEnvVariables()
@@ -101,5 +103,10 @@ class App
     private function createSymlinkForPublicDisk()
     {
         Artisan::call('storage:link');
+    }
+
+    private function copyHtaccessFile()
+    {
+        File::copy(base_path('.htaccess.example'), base_path('.htaccess'));
     }
 }

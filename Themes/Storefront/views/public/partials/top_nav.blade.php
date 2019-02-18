@@ -31,7 +31,13 @@
 
             <div class="top-nav-right pull-right">
                 <ul class="list-inline">
-                    <li><a href="{{ route('compare.index') }}">{{ trans('storefront::layout.compare') }} ({{ $compareCount }})</a></li>
+                    <li><a href="{{ route('contact.create') }}">{{ trans('storefront::contact.contact') }}</a></li>
+
+                    <li>
+                        <a href="{{ route('compare.index') }}">
+                            {{ trans('storefront::layout.compare') }} ({{ $compareCount }})
+                        </a>
+                    </li>
 
                     @auth
                         <li><a href="{{ route('account.wishlist.index') }}">{{ trans('storefront::account.links.my_wishlist') }}</a></li>

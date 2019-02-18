@@ -10,7 +10,7 @@
         <link href="{{ v(Module::asset('order:admin/css/print.css')) }}" rel="stylesheet">
     </head>
 
-    <body>
+    <body class="{{ is_rtl() ? 'rtl' : 'ltr' }}">
         <!--[if lt IE 8]>
             <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->

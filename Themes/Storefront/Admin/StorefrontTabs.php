@@ -132,7 +132,7 @@ class StorefrontTabs extends Tabs
         return tap(new Tab('slider_banners', trans('storefront::storefront.tabs.slider_banners')), function (Tab $tab) {
             $tab->weight(22);
             $tab->view('admin.storefront.tabs.slider_banners', [
-                'banners' => SliderBanner::all(),
+                'banners' => Banner::allForSliderBanners(),
             ]);
         });
     }

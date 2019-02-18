@@ -12,7 +12,7 @@
                 <img src="{{ $banner->image->path }}">
             @endif
 
-            <input type="hidden" name="{{ $name }}_file_id" value="{{ $banner->image->id }}" class="banner-file-id">
+            <input type="hidden" name="translatable[{{ $name }}_file_id]" value="{{ $banner->image->id }}" class="banner-file-id">
         </div>
 
         <div class="banner-content clearfix">

@@ -4,6 +4,9 @@ import noUiSlider from 'nouislider';
 import { stopButtonLoading, trans } from './functions';
 
 $(function () {
+    let isRTL = $('body').hasClass('rtl');
+    let directionClass = isRTL ? 'rtl' : 'ltr';
+
     /*----------------------------------------*/
     /*      sticky nav
     /*----------------------------------------*/
@@ -139,6 +142,7 @@ $(function () {
     /*----------------------------------------*/
     /*      mega menu
     /*----------------------------------------*/
+
     $('.navbar-default .dropdown-toggle').append('<i class="fa fa-angle-down"></i>');
 
     /*----------------------------------------*/
@@ -286,6 +290,7 @@ $(function () {
     /*----------------------------------------*/
     /*      home slider
     /*----------------------------------------*/
+
     let homeSlider = $('.home-slider');
 
     if (homeSlider.length !== 0) {
@@ -297,6 +302,7 @@ $(function () {
             dots: false,
             pauseOnHover: true,
             pauseOnFocus: false,
+            rtl: isRTL,
         });
     }
 
@@ -312,13 +318,17 @@ $(function () {
     /*      product slider
     /*----------------------------------------*/
 
-    $('.product-slider').slick({
+    let productSlider = $('.product-slider');
+    let productSlider2 = $('.product-slider-2');
+
+    productSlider.slick({
         autoplay: false,
         autoplaySpeed: 10000,
         dots: false,
         arrows: true,
         slidesToShow: 5,
         slidesToScroll: 5,
+        rtl: isRTL,
         responsive: [
             {
                 breakpoint: 1200,
@@ -351,13 +361,14 @@ $(function () {
         ],
     });
 
-    $('.product-slider-2').slick({
+    productSlider2.slick({
         autoplay: false,
         autoplaySpeed: 10000,
         dots: false,
         arrows: true,
         slidesToShow: 3,
         slidesToScroll: 3,
+        rtl: isRTL,
         responsive: [
             {
                 breakpoint: 681,
@@ -380,13 +391,16 @@ $(function () {
     /*      tab product slider
     /*----------------------------------------*/
 
-    $('.tab-product-slider').slick({
+    let tabProductSlider = $('.tab-product-slider');
+
+    tabProductSlider.slick({
         autoplay: false,
         autoplaySpeed: 10000,
         dots: true,
         arrows: false,
         slidesToShow: 5,
         slidesToScroll: 5,
+        rtl: isRTL,
         responsive: [
             {
                 breakpoint: 1200,
@@ -423,7 +437,9 @@ $(function () {
     /*      vertical products slider
     /*----------------------------------------*/
 
-    $('.vertical-products').slick({
+    let verticalProducts = $('.vertical-products');
+
+    verticalProducts.slick({
         autoplay: false,
         autoplaySpeed: 4000,
         dots: false,
@@ -431,13 +447,16 @@ $(function () {
         slidesToShow: 1,
         slidesToScroll: 1,
         rows: 0,
+        rtl: isRTL,
     });
 
     /*----------------------------------------*/
     /*      landscape product slider
     /*----------------------------------------*/
 
-    $('.landscape-products').slick({
+    let landscapeProducts = $('.landscape-products');
+
+    landscapeProducts.slick({
         infinite: true,
         autoplay: false,
         autoplaySpeed: 10000,
@@ -445,6 +464,7 @@ $(function () {
         arrows: true,
         slidesToShow: 3,
         slidesToScroll: 3,
+        rtl: isRTL,
         responsive: [
             {
                 breakpoint: 992,
@@ -474,12 +494,22 @@ $(function () {
     /*      brands slider
     /*----------------------------------------*/
 
-    $('.brands').slick({
-        slidesToShow: 4,
-        slidesToScroll: 4,
+    let brands = $('.brands');
+
+    brands.slick({
+        slidesToShow: 5,
+        slidesToScroll: 5,
         dots: false,
         arrows: false,
+        rtl: isRTL,
         responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
+                },
+            },
             {
                 breakpoint: 992,
                 settings: {
@@ -490,10 +520,17 @@ $(function () {
             {
                 breakpoint: 768,
                 settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                },
+            },
+            {
+                breakpoint: 601,
+                settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
                 },
-            },
+            }
         ],
     });
 
@@ -630,19 +667,23 @@ $(function () {
     /*----------------------------------------*/
 
     function productImage(baseImageConfig = {}, additionalImageConfig = {}) {
-        $('.base-image').slick($.extend({
+        let baseImage = $('.base-image');
+        let additionalImage = $('.additional-image');
+
+        baseImage.slick($.extend({
+            slidesToShow: 1,
+            slidesToScroll: 1,
             dots: false,
             arrows: false,
             infinite: false,
-            slidesToShow: 1,
-            slidesToScroll: 1,
             fade: false,
             draggable: false,
             swipe: false,
             rows: 0,
+            rtl: isRTL,
         }, baseImageConfig));
 
-        $('.additional-image').slick($.extend({
+        additionalImage.slick($.extend({
             slidesToShow: 4,
             slideToScroll: 1,
             dots: false,
@@ -652,6 +693,7 @@ $(function () {
             focusOnSelect: true,
             asNavFor: '.base-image',
             rows: 0,
+            rtl: isRTL,
             responsive: [
                 {
                     breakpoint: 1199,
@@ -673,21 +715,19 @@ $(function () {
                 sourceAttribute: 'src',
                 paneContainer: document.querySelector('.product-details'),
                 inlinePane: 991,
+                inlineOffsetY: -80,
                 containInline: true,
                 hoverBoundingBox: true,
             });
         });
 
-        let tos = $('.base-image-inner');
-
-        tos.tosrus({}, {}, {
-            drag: true,
-        });
-
-        $(document).on('keydown', function (e) {
-            if (e.keyCode === 27) {
-                tos.trigger('close');
-            }
+        baseImage.slickLightbox({
+            itemSelector: '.base-image-inner',
+            useHistoryApi: true,
+            slick: {
+                infinite: false,
+                rtl: isRTL,
+            },
         });
     }
 
@@ -952,6 +992,7 @@ $(function () {
         noUiSlider.create(priceRangeSlider, {
             start: [0, priceRangeSlider.dataset.toPrice],
             connect: true,
+            direction: directionClass,
             range: {
                 min: 0,
                 max: Number(priceRangeSlider.dataset.max) + 1,

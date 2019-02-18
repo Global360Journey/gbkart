@@ -108,9 +108,19 @@
         }
 	}
 
-	.slick-prev:before,
-	.slick-next:before {
-		font-size: 25px;
+	.slick-prev,
+	.slick-next {
+		&:before {
+			font-size: 25px;
+		}
+	}
+
+	.slick-prev {
+		left: -20px;
+	}
+
+	.slick-next {
+		right: -20px;
 	}
 }
 
@@ -268,19 +278,6 @@
 
 	.description {
 		padding: 30px 0 0;
-
-		h1, h2, h3, h4, h5, h6 {
-			margin-bottom: 8px;
-		}
-
-		> ul,
-		> ol {
-			margin-left: 18px;
-
-			> li {
-				line-height: 26px;
-			}
-		}
 	}
 
 	.reviews {
@@ -660,6 +657,11 @@
 
 	.product-details {
 		min-height: 0;
+
+		.product-name {
+			font-size: 30px;
+			line-height: 36px;
+		}
 	}
 
 	.reviews {

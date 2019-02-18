@@ -4,11 +4,8 @@ namespace Modules\Core\Foundation\Asset\Types;
 
 use Theme;
 
-class ThemeAsset implements AssetType
+class ThemeAsset extends Asset implements AssetType
 {
-    /**
-     * @var string
-     */
     private $path;
 
     public function __construct($path)
@@ -16,13 +13,10 @@ class ThemeAsset implements AssetType
         $this->path = $path;
     }
 
-    /**
-     * Get the URL.
-     *
-     * @return string
-     */
     public function url()
     {
-        return Theme::url($this->path);
+        return $this->asset(
+            Theme::url($this->path)
+        );
     }
 }

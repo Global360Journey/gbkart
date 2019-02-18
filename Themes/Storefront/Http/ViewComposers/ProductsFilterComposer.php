@@ -2,6 +2,8 @@
 
 namespace Themes\Storefront\Http\ViewComposers;
 
+use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 use Modules\Product\Entities\Product;
 use Modules\Category\Entities\Category;
 use Modules\Attribute\Entities\Attribute;
@@ -18,7 +20,7 @@ class ProductsFilterComposer
     {
         $view->with([
             'categories' => $this->categories(),
-            'attributes' => $this->attributes(),
+            'attributes' => $this->attributes($view),
             'maxPrice' => $this->maxPrice(),
         ]);
     }
@@ -28,9 +30,22 @@ class ProductsFilterComposer
         return Category::tree();
     }
 
-    private function attributes()
+    private function attributes($view)
     {
-        return Attribute::with('values')->where('is_filterable', true)->get();
+        return Attribute::with('values')
+            ->where('is_filterable', true)
+            ->whereHas('categories', function ($query) use ($view) {
+                $query->whereIn('id', $this->getProductsCategoryIds($view));
+            })
+            ->get();
+    }
+
+    private function getProductsCategoryIds($view)
+    {
+        return DB::table('product_categories')
+            ->whereIn('product_id', $view['productIds'])
+            ->distinct()
+            ->pluck('category_id');
     }
 
     private function maxPrice()

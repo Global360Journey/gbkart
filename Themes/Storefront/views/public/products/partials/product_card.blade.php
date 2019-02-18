@@ -39,7 +39,7 @@
 
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                <button type="submit" class="btn btn-wishlist" data-toggle="tooltip" data-placement="right" title="{{ trans('storefront::product_card.add_to_wishlist') }}">
+                <button type="submit" class="btn btn-wishlist" data-toggle="tooltip" data-placement="{{ is_rtl() ? 'left' : 'right' }}" title="{{ trans('storefront::product_card.add_to_wishlist') }}">
                     <i class="fa fa-heart-o" aria-hidden="true"></i>
                 </button>
             </form>
@@ -66,7 +66,7 @@
 
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                <button type="submit" class="btn btn-compare" data-toggle="tooltip" data-placement="left" title="{{ trans('storefront::product_card.add_to_compare') }}">
+                <button type="submit" class="btn btn-compare" data-toggle="tooltip" data-placement="{{ is_rtl() ? 'right' : 'left' }}" title="{{ trans('storefront::product_card.add_to_compare') }}">
                     <i class="fa fa-bar-chart" aria-hidden="true"></i>
                 </button>
             </form>

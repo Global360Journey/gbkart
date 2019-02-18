@@ -7,8 +7,7 @@
     "order": 10,
     "providers": [
         "Modules\\Setting\\Providers\\SettingServiceProvider",
-        "Modules\\Setting\\Providers\\RouteServiceProvider",
-        "Modules\\Setting\\Providers\\EventServiceProvider"
+        "Modules\\Setting\\Providers\\RouteServiceProvider"
     ],
     "files": [
         "helpers.php"

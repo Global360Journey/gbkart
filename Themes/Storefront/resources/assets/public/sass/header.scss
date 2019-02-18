@@ -26,18 +26,15 @@
     }
 
     .website-logo {
+        display: flex;
         height: 52px;
         width: 162px;
-        display: inline-block;
+        align-items: center;
         text-decoration: none;
         overflow: hidden;
 
         h2 {
-            margin-top: 8px;
-
-            @include themify {
-                color: themed('white');
-            }
+            color: #fafafa;
         }
 
         img {
@@ -337,10 +334,10 @@
 
     .cart-amount {
         position: relative;
-        display: flex;
+        width: 62px;
         margin: -4px 0 0 8px;
         padding-bottom: 20px;
-        vertical-align: top;
+        white-space: nowrap;
 
         @include themify {
             color: themed('black');
@@ -352,6 +349,9 @@
 
         .cart-label {
             font-weight: 500;
+            position: absolute;
+            left: 0;
+            top: 0;
 
             @include themify {
                 color: themed('white');
@@ -587,6 +587,25 @@
 
         .btn-checkout {
             margin-left: 5px;
+        }
+    }
+}
+
+.rtl {
+    .user-cart {
+        .mini-cart-details {
+            > form {
+                .cross-button {
+                    & + .tooltip.right {
+                        .tooltip-arrow {
+                            left: auto;
+                            right: 0;
+                            border-width: 5px 0 5px 5px;
+                            border-left-color: #000000;
+                        }
+                    }
+                }
+            }
         }
     }
 }

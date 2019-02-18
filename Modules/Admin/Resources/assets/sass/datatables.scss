@@ -158,6 +158,15 @@ div.dataTables_wrapper {
     color: #626060;
 }
 
+.dataTable.translations-table {
+    margin: 5px -15px !important;
+    padding: 0 15px;
+
+    > tbody > tr > td {
+        min-width: 150px;
+    }
+}
+
 @media screen and (max-width: 991px) {
     #products-table {
         .dataTable.table {

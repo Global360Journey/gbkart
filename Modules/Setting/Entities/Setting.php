@@ -51,24 +51,14 @@ class Setting extends Model
     protected $translatedAttributes = ['value'];
 
     /**
-     * Clear settings cache.
-     *
-     * @return void
-     */
-    public function clearCache()
-    {
-        Cache::flush();
-    }
-
-    /**
      * Get all settings with cache support.
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public static function allCached()
     {
-        return Cache::rememberForever('settings.all:' . locale(), function () {
-            return self::forCurrentLocaleWithFallback()->get()->mapWithKeys(function ($setting) {
+        return Cache::tags(['settings'])->rememberForever('settings.all:' . locale(), function () {
+            return self::all()->mapWithKeys(function ($setting) {
                 return [$setting->key => $setting->value];
             });
         });

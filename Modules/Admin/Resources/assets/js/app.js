@@ -238,8 +238,8 @@ function _init() {
             //Get the window height
             var window_height = $(window).height();
 
-            // Set the min-height of the content and sidebar based on the the height of the document.
-            $('.content-wrapper').css('min-height', window_height + 'px');
+            // Set the min-height of the content
+            $('.wrapper').css('min-height', window_height + 'px');
         },
         fixSidebar: function () {
             //Make sure the body tag has the .fixed class

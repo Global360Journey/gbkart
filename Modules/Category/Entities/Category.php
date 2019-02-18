@@ -60,12 +60,6 @@ class Category extends Model
         parent::boot();
 
         static::addActiveGlobalScope();
-
-        static::saved(function () {
-            Cache::forget('categories.tree');
-            Cache::forget('categories.tree_list');
-            Cache::forget('categories.searchable');
-        });
     }
 
     /**
@@ -80,27 +74,20 @@ class Category extends Model
 
     public static function tree()
     {
-        return Cache::rememberForever('categories.tree', function () {
+        return Cache::tags(['categories'])->rememberForever('categories.tree:' . locale(), function () {
             return static::orderByRaw('-position DESC')->get()->nest();
         });
     }
 
     public static function treeList()
     {
-        return Cache::rememberForever('categories.tree_list', function () {
-            return static::select('id', 'parent_id')
-                ->withName()
-                ->orderByRaw('-position DESC')
+        return Cache::tags(['categories'])->rememberForever('categories.tree_list:' . locale(), function () {
+            return static::orderByRaw('-position DESC')
                 ->get()
                 ->nest()
                 ->setIndent('¦–– ')
                 ->listsFlattened('name');
         });
-    }
-
-    public function scopeWithName($query)
-    {
-        $query->with('translations:id,category_id,locale,name');
     }
 
     /**
@@ -110,7 +97,7 @@ class Category extends Model
      */
     public static function searchable()
     {
-        return Cache::rememberForever('categories.searchable', function () {
+        return Cache::tags(['categories'])->rememberForever('categories.searchable:' . locale(), function () {
             return static::where('is_searchable', true)->get();
         });
     }

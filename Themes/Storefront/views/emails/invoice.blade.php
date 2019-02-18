@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -113,6 +112,10 @@
                     float: left;
                     width: 50%;
                 }
+
+                .rtl .col-sm-6 {
+                    float: right;
+                }
             }
 
             @media (min-width: 992px) {
@@ -122,6 +125,12 @@
 
                 .col-md-3, .col-md-9, .col-md-12 {
                     float: left;
+                }
+
+                .rtl .col-md-3,
+                .rtl .col-md-9,
+                .rtl .col-md-12 {
+                    float: right;
                 }
 
                 .col-md-12 {
@@ -157,6 +166,10 @@
 
             th {
                 text-align: left;
+            }
+
+            .rtl th {
+                text-align: right;
             }
 
             .table {
@@ -261,11 +274,23 @@
                 float: right !important;
             }
 
+            .rtl .pull-right {
+                float: left !important;
+            }
+
             .pull-left {
                 float: left !important;
             }
 
+            .rtl .pull-left {
+                float: right !important;
+            }
+
             /* invoice style */
+            .rtl {
+                direction: rtl;
+            }
+
             .invoice-wrapper {
                 position: relative;
                 padding-bottom: 30px;
@@ -309,8 +334,13 @@
                 top: 0;
                 width: 285px;
                 height: 100%;
-                background: #292929;
+                background: #262938;
                 z-index: -1;
+            }
+
+            .rtl .invoice-wrapper .left-background {
+                left: auto;
+                right: 0;
             }
 
             .invoice-wrapper .invoice-header {
@@ -353,6 +383,11 @@
                 margin-right: 15px;
             }
 
+            .rtl .invoice-header .invoice-header-right {
+                margin-right: 0;
+                margin-left: 15px;
+            }
+
             .invoice-wrapper .invoice-header .store-name {
                 height: 152px;
                 width: 100%;
@@ -385,6 +420,11 @@
                 margin-left: 4px;
             }
 
+            .rtl .invoice-header .invoice-info {
+                margin-left: 0;
+                margin-right: 4px;
+            }
+
             .invoice-header .invoice-info label {
                 color: #fafafa;
             }
@@ -393,6 +433,10 @@
                 font-size: 15px;
                 float: right;
                 color: #f9f9f9;
+            }
+
+            .rtl .invoice-header .invoice-info span {
+                float: left;
             }
 
             .invoice-body .order-details {
@@ -497,9 +541,18 @@
                 display: inline-block;
             }
 
+            .rtl .cart-list .option span span {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+
             .invoice-body .total {
                 width: 300px;
-                margin: 5px 15px 0 0;
+                margin: 20px 15px 0 0;
+            }
+
+            .rtl .invoice-body .total {
+                margin: 20px 0 0 15px;
             }
 
             .total .table {
@@ -519,6 +572,10 @@
 
             .total .table td:last-child {
                 text-align: right;
+            }
+
+            .rtl .total .table td:last-child {
+                text-align: left;
             }
 
             .total .table tr:last-child td {
@@ -591,7 +648,11 @@
                 }
 
                 .invoice-body .total {
-                    margin-right: 0px;
+                    margin-right: 0;
+                }
+
+                .rtl .invoice-body .total {
+                    margin-left: 0;
                 }
             }
 
@@ -645,9 +706,18 @@
                     font-size: 15px;
                 }
 
+                .rtl .cart-list tbody td label {
+                    float: right;
+                }
+
                 .cart-list tbody td label + span {
                     font-size: 15px;
                     margin-left: 5px;
+                }
+
+                .rtl .cart-list tbody td label + span {
+                    margin-left: 0;
+                    margin-right: 5px;
                 }
             }
 
@@ -659,7 +729,7 @@
 
             @media print {
                 .invoice-wrapper {
-                    border: none;
+                    border: none !important;
                 }
 
                 .invoice-wrapper .invoice-header {
@@ -672,24 +742,42 @@
                 }
 
                 .invoice-wrapper .invoice-header {
-                    background: transparent;
+                    background: transparent !important;
                 }
 
                 .invoice-header .col-md-3 {
                     float: left;
                 }
 
+                .rtl .invoice-header .col-md-3 {
+                    float: right;
+                }
+
                 .invoice-header .col-md-9 {
                     float: right;
+                }
+
+                .rtl .invoice-header .col-md-9 {
+                    float: left;
                 }
 
                 .invoice-wrapper .invoice-header-right {
                     margin-right: 15px;
                 }
 
+                .rtl .invoice-wrapper .invoice-header-right {
+                    margin-right: 0;
+                    margin-left: 15px;
+                }
+
                 .invoice-header .store-name h1 {
                     margin-left: 15px;
                     color: #444444;
+                }
+
+                .rtl .invoice-header .store-name h1 {
+                    margin-left: 0;
+                    margin-right: 15px;
                 }
 
                 .invoice-header-right .title {
@@ -711,6 +799,10 @@
                 .invoice-body .col-md-3 .col-sm-6 {
                     width: 50%;
                     float: left;
+                }
+
+                .rtl .invoice-body .col-md-3 .col-sm-6 {
+                    float: right;
                 }
 
                 .invoice-body .col-md-9 {
@@ -754,7 +846,7 @@
         </style>
     </head>
 
-    <body class="{{ setting('storefront_theme', 'theme-blue') }}">
+    <body class="{{ setting('storefront_theme', 'theme-blue') }} {{ is_rtl() ? 'rtl' : 'ltr' }}">
         <div class="container">
             <div class="invoice-wrapper clearfix">
                 <div class="left-background"></div>

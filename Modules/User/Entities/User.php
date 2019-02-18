@@ -23,6 +23,16 @@ class User extends EloquentUser implements AuthenticatableContract
      */
     protected $dates = ['last_login'];
 
+    public static function registered($email)
+    {
+        return static::where('email', $email)->exists();
+    }
+
+    public static function findByEmail($email)
+    {
+        return static::where('email', $email)->first();
+    }
+
     public static function totalCustomers()
     {
         return Role::findOrNew(setting('customer_role'))->users()->count();
@@ -45,6 +55,10 @@ class User extends EloquentUser implements AuthenticatableContract
      */
     public function isCustomer()
     {
+        if ($this->hasRoleName('admin')) {
+            return false;
+        }
+
         return $this->hasRoleId(setting('customer_role'));
     }
 
@@ -78,7 +92,7 @@ class User extends EloquentUser implements AuthenticatableContract
      */
     public function hasRoleName($name)
     {
-        return $this->roles()->whereName($name)->count() !== 0;
+        return $this->roles()->whereTranslation('name', $name)->count() !== 0;
     }
 
     /**
